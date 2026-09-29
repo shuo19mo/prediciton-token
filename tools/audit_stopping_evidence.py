@@ -305,6 +305,20 @@ def _aggregate_observation_presence(rows: list[dict[str, Any]], b_subset: bool =
     return {layer: {code: dict(sorted(presence_counts.items())) for code, presence_counts in sorted(codes.items())} for layer, codes in sorted(counts.items())}
 
 
+def _tau_action_evidence(raw_record: dict[str, Any], pointer: str) -> dict[str, Any]:
+    """Compare an action count with candidate source defaults without inferring a stop."""
+    actions = raw_record.get("taken_actions")
+    if not isinstance(actions, list):
+        return {"observation": None, "source_runtime_consistency": {"status": "unknown"}, "task_termination": {"status": "unknown"}, "identification_assessment": _identification_unknown("No observed action list or runtime pin evidence.")}
+    count = len(actions)
+    return {
+        "observation": {"layer": "task_runtime_marker", "code": "tau_candidate_step_default_comparison", "source_ref": "archive", "field_pointer": f"/{pointer}/taken_actions", "presence": "present", "interpretation_scope": "candidate dependency default max_num_steps=30; actual dependency pin and stop activation unknown", "observed_action_count": count, "candidate_default": 30},
+        "source_runtime_consistency": {"status": "unknown", "reason": "Archive metadata does not identify the installed TAU dependency pin."},
+        "task_termination": {"status": "unknown"},
+        "identification_assessment": _identification_unknown("Action count relative to candidate source defaults does not establish task termination or censoring conditions."),
+    }
+
+
 def _raw_call_evidence(archive: dict[str, Any], run: dict[str, Any]) -> list[dict[str, Any]]:
     logs = archive.get("raw_logging_results")
     if not isinstance(logs, list):
@@ -629,11 +643,12 @@ def build_index(data_root: Path, source_index_path: Path, private_output: Path, 
                     if key in raw_record:
                         val = raw_record[key]
                         if run.get("benchmark") == "taubench_airline" and key == "taken_actions" and isinstance(val, list):
-                            count = len(val)
-                            tau_action_counts.append(count)
-                            observations.append({"layer": "task_runtime_marker", "code": "tau_candidate_step_default_comparison", "source_ref": "archive", "field_pointer": f"/{pointer}/taken_actions", "presence": "present", "interpretation_scope": "99 observed action-list counts; candidate dependency default max_num_steps=30; actual dependency pin and stop activation unknown", "private_summary": f"action_count={count}; candidate_default=30"})
-                            if count > 30:
-                                add_review_example("tau_candidate_default_exceeded", {"episode_id": run["episode_id"], "archive_sha256": run["archive_sha256"], "raw_record_pointer": f"/{pointer}/taken_actions", "observed_action_count": count, "candidate_default": 30, "runtime_pin": "unknown"}, limit=3)
+                            tau_evidence = _tau_action_evidence(raw_record, pointer)
+                            observation = tau_evidence["observation"]
+                            tau_action_counts.append(observation["observed_action_count"])
+                            observations.append(observation)
+                            if observation["observed_action_count"] > observation["candidate_default"]:
+                                add_review_example("tau_candidate_default_exceeded", {"episode_id": run["episode_id"], "archive_sha256": run["archive_sha256"], "raw_record_pointer": observation["field_pointer"], "observed_action_count": observation["observed_action_count"], "candidate_default": observation["candidate_default"], "runtime_pin": "unknown"}, limit=3)
                         if key == "log_info":
                             observations.append({"layer": "evaluation_diagnostic", "code": "eval_log_info", "source_ref": "archive", "field_pointer": f"/{pointer}/{key}", "presence": _presence(raw_record, key), "interpretation_scope": "evaluation-only", "excerpt_internal": json.dumps(val, ensure_ascii=False)[:400]})
                             if val not in (None, "", [], {}):
@@ -664,7 +679,7 @@ def build_index(data_root: Path, source_index_path: Path, private_output: Path, 
         # B candidate source data does not contain any scientific censor decision.
         assessment = task_evidence["identification_assessment"]
         source_verified = bool(source and any(item.get("content_verification") == "local_receipt_sha256_verified" for item in source.get("source_files", [])))
-        consistency = "conflicting" if configuration_conflict or (limit_conflict and limit_conflict["status"] == "conflicting") else "unknown"
+        consistency = "unknown" if run.get("benchmark") == "taubench_airline" else ("conflicting" if configuration_conflict or (limit_conflict and limit_conflict["status"] == "conflicting") else "unknown")
         if source and not source_verified:
             add_review_example("unverified_source_version", {"archive_sha256": run["archive_sha256"], "code_commit": run.get("code_commit"), "source_index_commit": source["hal_commit"]})
         evidence_row = {

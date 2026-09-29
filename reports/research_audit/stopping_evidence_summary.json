@@ -45,7 +45,7 @@
     "source_versions_expected": 12,
     "unregistered_source_version_count": 0
   },
-  "evidence_content_sha256": "715fdd9972a7991ca479882a45e3fbf38be6aaa84471fbb954441740b2eb07e4",
+  "evidence_content_sha256": "b941db019faa6a9dd663711519aebe82d47e603499e78cefd7f426dbcedde849",
   "evidence_coverage_B_failure_subset": {
     "call_finish_reason": {
       "finish_reason_observed": 4884

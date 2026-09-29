@@ -75,6 +75,14 @@ class StoppingEvidenceSemanticsTests(unittest.TestCase):
         self.assertEqual(audit._aggregate_observation_presence(rows, b_subset=True)["evaluation_diagnostic"]["eval_log_info"], {"empty": 1, "present": 1})
         self.assertEqual(audit._aggregate_observation_presence(rows)["evaluation_diagnostic"]["eval_log_info"], {"empty": 1, "present": 2})
 
+    def test_tau_candidate_action_count_does_not_establish_runtime_stop_or_censoring(self):
+        evidence = audit._tau_action_evidence({"taken_actions": ["synthetic"] * 31}, "raw_eval_results/task-x")
+        self.assertEqual(evidence["observation"]["code"], "tau_candidate_step_default_comparison")
+        self.assertEqual(evidence["observation"]["observed_action_count"], 31)
+        self.assertEqual(evidence["source_runtime_consistency"]["status"], "unknown")
+        self.assertEqual(evidence["task_termination"]["status"], "unknown")
+        self.assertEqual({item["status"] for item in evidence["identification_assessment"].values()}, {"unknown"})
+
     def test_source_registration_requires_exact_archive_repository_and_commit_pair(self):
         commit = "23fc5665d6804fa72240f479e38f73fb53600002"
         origin = audit.EXPECTED_REPOSITORY_BY_COMMIT[commit]

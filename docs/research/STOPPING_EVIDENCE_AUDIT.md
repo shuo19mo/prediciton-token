@@ -23,11 +23,11 @@ The source registry in `configs/hal_stopping_sources.json` binds every expected 
 
 Source files actually read at commit-pinned revisions:
 
-- SAB agent control flow at `science_agent.py` for commits `23fc566…` and `eb094b…` (write-program, step and solve paths).
+- SAB agent control flow at `science_agent.py` for commits `23fc566…`, `eb094b…` and `edfe626…` (write-program, step and solve paths); `edfe626…` was checked against the existing local receipt.
 - HAL Generalist `main.py` at `bc575cd…`, `8a0e293…` and `6a44aed…` (budget callback / step-limit paths).
 - CORE `main.py` at `c7354eb…` and `7e56e66…` (budget and max-step paths).
 - SciCode agent `main.py` and evaluator `hal/benchmarks/scicode.py` at `0ac45fa…`; evaluator timeout is specifically classified as evaluation-side.
-- HAL TAU wrapper and `pyproject.toml` at `b64fc7c…`, plus pinned TAU dependency `807e348…` files `tau_bench/agents/tool_calling_agent.py` and `tau_bench/envs/base.py`.
+- HAL TAU wrapper and `pyproject.toml` at `b64fc7c…`, plus both candidate TAU dependency versions `807e348…` and `bef42de…`, whose `tau_bench/agents/tool_calling_agent.py` and `tau_bench/envs/base.py` files were read at each commit. The corresponding file Git blob IDs are identical across these two revisions.
 - SWE parent `.gitmodules` at `02a2500…` and `85513db…`, the corresponding parent gitlinks (`94f540c…` and `d872eb7…`), and the pinned SWE-agent `agents.py` and cost-limit configuration files at those submodule commits.
 
 The source registry is not a claim that every source file was independently byte-verified. Exact historical bytes were verified only where the existing local receipt matched. For other source files, the immutable Git blob ID and commit-pinned URL are recorded, but raw-byte SHA-256 remains null because this pass did not acquire raw bytes. The TAU dependency pin is recorded as two candidates with separate commit URLs and blob IDs: `pyproject.toml` contains multiple pins and archive metadata does not resolve which extra was installed for each run. Runtime package resolution remains unknown. Likewise, a parent gitlink identifies the SWE-agent commit but does not itself establish the runtime checkout or execution path.
@@ -36,7 +36,7 @@ The registry captures source-level stopping mechanisms and relevant line ranges 
 
 ## Private examples and reproducibility
 
-Private, task-key-locatable examples (not included in Git) are written to the controlled `data/derived/stopping_audit/review_examples.internal.json`: explicit timeout output, evaluation diagnostics, runs whose stopping reason remains unknown, and source versions without a local raw-byte receipt. Task IDs and raw excerpts stay in the private index.
+Private, task-key-locatable examples (not included in Git) are written to the controlled `data/derived/stopping_audit/review_examples.internal.json`: explicit timeout output, evaluation diagnostics, runs whose stopping reason remains unknown, source versions without a local raw-byte receipt, and the three TAU action counts above the candidate default of 30. The TAU examples are candidate discrepancies only; runtime pin and stopping mechanism remain unknown. Task IDs and raw excerpts stay in the private index.
 
 From the repository root, synthetic checks run with:
 

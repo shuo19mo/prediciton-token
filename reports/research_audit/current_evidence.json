@@ -1,0 +1,110 @@
+{
+  "scope": "aggregate_source_and_derived_fact_recheck_not_identification",
+  "sources_checked": 17,
+  "derived_frozen_files_checked": 9,
+  "runs": 1197,
+  "task_identities": 312,
+  "whole_run_token_cap_unknown": 1197,
+  "training_approved_rows": 0,
+  "benchmarks": [
+    {
+      "benchmark": "corebench_hard",
+      "runs": 90,
+      "task_identities": 45,
+      "observed_success": 15,
+      "observed_failure": 75,
+      "unknown_outcome": 0,
+      "A_candidates": 13,
+      "A_failure_candidates": 0,
+      "A_success_tasks": 12,
+      "B_failure_candidates": 48,
+      "B_failure_parsed_stops": {
+        "unknown": 48
+      },
+      "B_failure_has_eval_log": 0,
+      "B_failure_restriction_fields": {
+        "max_steps": 48
+      }
+    },
+    {
+      "benchmark": "scicode",
+      "runs": 195,
+      "task_identities": 65,
+      "observed_success": 7,
+      "observed_failure": 188,
+      "unknown_outcome": 0,
+      "A_candidates": 0,
+      "A_failure_candidates": 0,
+      "A_success_tasks": 0,
+      "B_failure_candidates": 0,
+      "B_failure_parsed_stops": {},
+      "B_failure_has_eval_log": 0,
+      "B_failure_restriction_fields": {}
+    },
+    {
+      "benchmark": "scienceagentbench",
+      "runs": 612,
+      "task_identities": 102,
+      "observed_success": 134,
+      "observed_failure": 478,
+      "unknown_outcome": 0,
+      "A_candidates": 134,
+      "A_failure_candidates": 0,
+      "A_success_tasks": 56,
+      "B_failure_candidates": 478,
+      "B_failure_parsed_stops": {
+        "explicit_timeout": 2,
+        "unknown": 476
+      },
+      "B_failure_has_eval_log": 460,
+      "B_failure_restriction_fields": {
+        "budget": 91,
+        "max_tokens": 387
+      }
+    },
+    {
+      "benchmark": "swebench_verified_mini",
+      "runs": 200,
+      "task_identities": 50,
+      "observed_success": 14,
+      "observed_failure": 120,
+      "unknown_outcome": 66,
+      "A_candidates": 14,
+      "A_failure_candidates": 0,
+      "A_success_tasks": 13,
+      "B_failure_candidates": 77,
+      "B_failure_parsed_stops": {
+        "unknown": 77
+      },
+      "B_failure_has_eval_log": 0,
+      "B_failure_restriction_fields": {
+        "agent.model.per_instance_cost_limit": 43,
+        "budget": 1
+      }
+    },
+    {
+      "benchmark": "taubench_airline",
+      "runs": 100,
+      "task_identities": 50,
+      "observed_success": 40,
+      "observed_failure": 60,
+      "unknown_outcome": 0,
+      "A_candidates": 0,
+      "A_failure_candidates": 0,
+      "A_success_tasks": 0,
+      "B_failure_candidates": 0,
+      "B_failure_parsed_stops": {},
+      "B_failure_has_eval_log": 0,
+      "B_failure_restriction_fields": {}
+    }
+  ],
+  "source_manifest_sha256": "d66db6fb76bfe5bb5e5e2aca1902944d6e1ce1b32b071d4e20b88db97d373842",
+  "input_sha256": {
+    "runs.jsonl": "0117bf11dce813db1c800a1d539d22fabdee073f2f02abf18eb4f865455cbc37",
+    "label_candidates.jsonl": "65062d1fc02fc357a3bfd562e13ce4eed0bffe3e57f51ecb487765f677c793f4",
+    "protocol_summary.json": "afc59afb4de06c2c3a8941493f583e85a3a5751480f66ebd3ba0782dca4b63a7"
+  },
+  "scientific_contribution_established": false,
+  "errors": [],
+  "status": "pass_fact_recheck_only"
+}

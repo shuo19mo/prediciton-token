@@ -1,0 +1,39 @@
+__pycache__/
+*.pyc
+.venv/
+data/raw/
+data/derived/
+artifacts/
+.env
+.env.*
+!.env.example
+configs/server.local.json
+
+# Keep all run-level records, releases, hidden truths and downloaded material local.
+data/
+docs/evidence/
+research_plan/data/
+research_plan/results/
+research_plan/figures/
+research_plan/.venv/
+output/
+tmp/
+.frontend-slides/
+.DS_Store
+*.log
+*.zip
+*.parquet
+*.gpg
+*.internal.json
+*.internal.jsonl
+
+# Historical manuscript is paused and remains local.
+paper/*
+!paper/README.md
+
+# Historical notes with run-level examples remain in the local evidence workspace.
+docs/research/BENCHMARK_DATA_EXAMPLES.md
+docs/benchmarks/
+research_plan/evidence/data_audit.md
+configs/hal_family_map.json
+reports/weekly-*/

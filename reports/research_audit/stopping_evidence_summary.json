@@ -1,0 +1,235 @@
+{
+  "B_failure_subset_count": 603,
+  "archive_count": 17,
+  "configured_rule_presence_B_failure_subset": {
+    "per_call:tokens:max_tokens": {
+      "present": 387
+    },
+    "run:USD_or_unspecified_currency:agent.model.per_instance_cost_limit": {
+      "present": 43
+    },
+    "run:USD_or_unspecified_currency:budget": {
+      "present": 92
+    },
+    "run:steps:max_steps": {
+      "present": 48
+    },
+    "run:tokens:whole_run_token_cap": {
+      "empty": 603
+    }
+  },
+  "configured_rule_presence_all_runs": {
+    "per_call:tokens:max_tokens": {
+      "present": 510
+    },
+    "run:USD_or_unspecified_currency:agent.model.per_instance_cost_limit": {
+      "present": 100
+    },
+    "run:USD_or_unspecified_currency:budget": {
+      "present": 152
+    },
+    "run:steps:max_steps": {
+      "present": 90
+    },
+    "run:tokens:whole_run_token_cap": {
+      "empty": 1197
+    }
+  },
+  "coverage": {
+    "raw_task_join_status": {
+      "exact_task_key": 1197
+    },
+    "source_files_total": 22,
+    "source_git_blob_pinned_files": 19,
+    "source_sha256_verified_files": 5,
+    "source_versions_expected": 12,
+    "unregistered_source_version_count": 0
+  },
+  "evidence_content_sha256": "4948de41de9d8a346abaefb07ab6b8883ac3b3d43242a71440065ef4cedbb137",
+  "evidence_coverage_B_failure_subset": {
+    "call_finish_reason": {
+      "finish_reason_observed": 4884
+    },
+    "configuration_rule": {
+      "configuration_value_matched": 570
+    },
+    "evaluation_diagnostic": {
+      "eval_log_info": 478,
+      "raw_error_observed": 1,
+      "swe_result_membership": 77
+    },
+    "task_runtime_marker": {
+      "explicit_timeout_prefix": 2
+    }
+  },
+  "evidence_coverage_all_runs": {
+    "call_finish_reason": {
+      "finish_reason_not_recorded": 32,
+      "finish_reason_observed": 12297,
+      "no_exact_task_call_join": 4
+    },
+    "configuration_rule": {
+      "configuration_value_matched": 852
+    },
+    "evaluation_diagnostic": {
+      "eval_log_info": 612,
+      "raw_error_observed": 26,
+      "scicode_details_entry": 195,
+      "swe_result_membership": 200
+    },
+    "task_runtime_marker": {
+      "explicit_error_prefix": 1,
+      "explicit_timeout_prefix": 2,
+      "raw_reward_observed": 99,
+      "raw_taken_actions_observed": 99
+    }
+  },
+  "explicit_raw_markers_B_failure_subset": {
+    "explicit_timeout_prefix": 2
+  },
+  "explicit_raw_markers_all_runs": {
+    "explicit_error_prefix": 1,
+    "explicit_timeout_prefix": 2
+  },
+  "identification_coverage": {
+    "T_gt_U": {
+      "unknown": 1197
+    },
+    "conditional_independence": {
+      "unknown": 1197
+    },
+    "first_success_visibility": {
+      "unknown": 1197
+    },
+    "same_continuation": {
+      "unknown": 1197
+    }
+  },
+  "input_sha256": {
+    "label_candidates.jsonl": "65062d1fc02fc357a3bfd562e13ce4eed0bffe3e57f51ecb487765f677c793f4",
+    "manifest": "d66db6fb76bfe5bb5e5e2aca1902944d6e1ce1b32b071d4e20b88db97d373842",
+    "protocol_summary.json": "afc59afb4de06c2c3a8941493f583e85a3a5751480f66ebd3ba0782dca4b63a7",
+    "runs.jsonl": "0117bf11dce813db1c800a1d539d22fabdee073f2f02abf18eb4f865455cbc37"
+  },
+  "known_gaps": [
+    "Raw runtime marker association is exact-keyed but does not establish which agent branch ended a task.",
+    "Historical source bytes are only marked verified when a local pinned receipt matches; missing receipts remain unknown.",
+    "Per-call finish reasons, dollar/step limits, evaluation diagnostics, and task termination are distinct evidence layers."
+  ],
+  "run_count": 1197,
+  "schema_version": "hal-stopping-summary-v1",
+  "scientific_contribution_established": false,
+  "scope": "aggregate evidence indexing only; no scientific identification established",
+  "strata": [
+    {
+      "B_failure_raw_joined": 10,
+      "B_failure_subset": 10,
+      "B_failure_task_termination_unknown": 10,
+      "benchmark": "corebench_hard",
+      "code_commit": "7e56e6688e288e8db86b3612b551370330ae218d",
+      "runs": 45,
+      "scaffold": "core_agent"
+    },
+    {
+      "B_failure_raw_joined": 38,
+      "B_failure_subset": 38,
+      "B_failure_task_termination_unknown": 38,
+      "benchmark": "corebench_hard",
+      "code_commit": "c7354ebd3ce3d284e3c89150e1218836c42eccac",
+      "runs": 45,
+      "scaffold": "core_agent"
+    },
+    {
+      "B_failure_raw_joined": 0,
+      "B_failure_subset": 0,
+      "B_failure_task_termination_unknown": 0,
+      "benchmark": "scicode",
+      "code_commit": "0ac45fa43a60658ec037b354b5039d3131317069",
+      "runs": 195,
+      "scaffold": "scicode_zero_shot"
+    },
+    {
+      "B_failure_raw_joined": 91,
+      "B_failure_subset": 91,
+      "B_failure_task_termination_unknown": 91,
+      "benchmark": "scienceagentbench",
+      "code_commit": "bc575cd58bdb0a203c08952169df7e5d3330b8d8",
+      "runs": 102,
+      "scaffold": "hal_generalist"
+    },
+    {
+      "B_failure_raw_joined": 165,
+      "B_failure_subset": 165,
+      "B_failure_task_termination_unknown": 165,
+      "benchmark": "scienceagentbench",
+      "code_commit": "23fc5665d6804fa72240f479e38f73fb53600002",
+      "runs": 204,
+      "scaffold": "sab_self_debug"
+    },
+    {
+      "B_failure_raw_joined": 148,
+      "B_failure_subset": 148,
+      "B_failure_task_termination_unknown": 148,
+      "benchmark": "scienceagentbench",
+      "code_commit": "eb094b928198c6e1029a8e0c247576c78a1fe9f7",
+      "runs": 204,
+      "scaffold": "sab_self_debug"
+    },
+    {
+      "B_failure_raw_joined": 74,
+      "B_failure_subset": 74,
+      "B_failure_task_termination_unknown": 74,
+      "benchmark": "scienceagentbench",
+      "code_commit": "edfe626b0e96fbf92fb8a41a705e31205d716e1e",
+      "runs": 102,
+      "scaffold": "sab_self_debug"
+    },
+    {
+      "B_failure_raw_joined": 1,
+      "B_failure_subset": 1,
+      "B_failure_task_termination_unknown": 1,
+      "benchmark": "swebench_verified_mini",
+      "code_commit": "6a44aedf5ca8bfc81f9354658a4f66553eee730d",
+      "runs": 50,
+      "scaffold": "hal_generalist"
+    },
+    {
+      "B_failure_raw_joined": 33,
+      "B_failure_subset": 33,
+      "B_failure_task_termination_unknown": 33,
+      "benchmark": "swebench_verified_mini",
+      "code_commit": "8a0e2933c7e2b6162c149810aff02a3d4cbcd48c",
+      "runs": 50,
+      "scaffold": "hal_generalist"
+    },
+    {
+      "B_failure_raw_joined": 6,
+      "B_failure_subset": 6,
+      "B_failure_task_termination_unknown": 6,
+      "benchmark": "swebench_verified_mini",
+      "code_commit": "02a2500e9883ecc022b3eeae29bc5b557788b3c7",
+      "runs": 50,
+      "scaffold": "swe_agent"
+    },
+    {
+      "B_failure_raw_joined": 37,
+      "B_failure_subset": 37,
+      "B_failure_task_termination_unknown": 37,
+      "benchmark": "swebench_verified_mini",
+      "code_commit": "85513dbe3ac92d135c304cd9ef5920e5a78f436f",
+      "runs": 50,
+      "scaffold": "swe_agent"
+    },
+    {
+      "B_failure_raw_joined": 0,
+      "B_failure_subset": 0,
+      "B_failure_task_termination_unknown": 0,
+      "benchmark": "taubench_airline",
+      "code_commit": "b64fc7cc5c0aa7ea2fbf197d835805460bcf2e7b",
+      "runs": 100,
+      "scaffold": "tau_toolcalling"
+    }
+  ],
+  "tool_version": "0.1.0",
+  "training_approved_rows": 0
+}

@@ -1,33 +1,56 @@
-# HAL停止证据初核：解析未知不等于原日志无信息
+# HAL stopping evidence audit (v2, 2026-09-29)
 
-版本2026-09-28-r1；当前是机制调查的初步证据，尚未完成逐运行停止分支核对。研究状态以GitHub对应issue为准。
+## Scope and result
 
-对现有17归档的派生事实复算，B的603个失败候选中，601条 `stop_reason=null`，2条 `explicit_timeout`；1,197条记录均没有整次token cap。分层为SAB 476未知/2超时、CORE 48未知、SWE 77未知。来源hash及分母见[聚合复算](../../reports/research_audit/current_evidence.json)。
+This is a read-only evidence inventory of the frozen HAL historical records. It does not establish a censoring mechanism, identify a successful continuation for failed runs, or qualify rows for training. The analysis is deliberately limited to archived records and commit-pinned source inspection; no agents, benchmark code, evaluators, scorers, or training were run.
 
-`stop_reason` 当前解析器仅识别最终字符串TIMEOUT/ERROR前缀；它不是完整停止机制分类器。因此601不能写成“601条原始日志均无停止证据”。SAB的478失败中460条 `has_eval_log=true`，需核读诊断内容及与真实终止的关联；benchmark判分日志也不能直接冒充agent终止原因。
+The index covers 1,197 existing runs across 17 frozen archives. Exact task-key joins were available for all 1,197 records. The protocol-B failure subset contains 603 rows (SAB 478, CORE 48, SWE 77; SciCode and TAU 0). These counts reproduce the existing derived cohort; they are not estimates of censoring validity.
 
-| 证据层 | 已查事实 | 对统一删失编码的意义 | 未解决项 |
-|---|---|---|---|
-| SAB Self-Debug历史规则 | 最多10轮；程序退出/输出文件存在、代码无变化可提前停止 | 正常结束不等于完成benchmark；`max_tokens`只限制单调用 | 各失败实际触发分支；过程中是否曾满足最终标准 |
-| SAB Generalist历史规则 | 200步；配置budget=1.0；费用回调误将输入计数用作输出计数 | 名义美元预算不是可信整次token上限，也不证明实际触发 | 回调/工具结束/异常各分支逐运行证据 |
-| CORE历史规则 | 40步、辅助视觉模型；48条失败候选都有max_steps字段 | 步数限制不是token cap；配置存在不等于每题触发 | 保存的steps或最后动作是否可关联，是否有提前结束 |
-| SWE记录 | 77失败候选；43有per-instance美元限制、1有budget字段、33没有上述字段 | 空patch、评估错误、失败与停止原因不可混为一谈 | 对应历史scaffold和依赖版本的停止路径、异常日志 |
-| 调用结束 | 模型finish_reason至多说明该调用结束 | 不能推出整条任务成功、失败或预算停止 | 需要完整任务层的终止证据 |
+## What the archives show
 
-冻结源码出处（只读，不执行）：
+- The only direct top-level task-output markers found are two `TIMEOUT` prefixes and one `ERROR:` prefix across all runs; both timeout markers are in the B subset. These strings establish observed output markers only, not why a task stopped or whether continuation was possible.
+- Raw call logs contain finish reasons (12,297 observed; 32 absent; four without an exact task-call join). A call-level `length`/finish reason is not a task-level stop event.
+- Evaluator diagnostics and membership records were kept separate from agent output. The B subset has 478 evaluation-log records and 77 SWE result-membership records. SciCode evaluator timeout configuration is not evidence that the agent itself timed out.
+- The archives contain configured per-call token caps, dollar budgets and step limits, but no verified whole-run token cap. Configuration alone does not show that a limit activated.
+- All 1,197 rows remain `unknown` for each required identification condition: `T > U`, same continuation, first-success visibility, and conditional independent censoring. No row is approved for training.
 
-- [SAB Self-Debug](https://github.com/princeton-pli/hal-harness/blob/23fc5665d6804fa72240f479e38f73fb53600002/agents/sab_example_agent/science_agent.py#L166)：sha256 `46d1f4c06d98518d3d90eb369939a79d7db7917a78e93ff786f804a39e8b56a6`，166–253行停止和调试分支；另一Opus归档对应edfe626b版本文件hash相同。其余提交仍需逐一绑定。
-- [Generalist](https://github.com/princeton-pli/hal-harness/blob/bc575cd58bdb0a203c08952169df7e5d3330b8d8/agents/hal_generalist_agent/main.py#L90)：sha256 `71d1287b61e31f8a1c06d3ce8d37d31332553e3c6b505eed77e7b72b2aaa26dc`；90–99行费用回调、507–509行SAB agent设置。该证据不自动套用到所有SWE Generalist历史提交。
-- [CORE](https://github.com/princeton-pli/hal-harness/blob/c7354ebd3ce3d284e3c89150e1218836c42eccac/agents/core_agent/main.py#L721)：sha256 `994e2e84f792b17ee62081001559c41f06299150dd95db0e9c9819ebce4c433c`；721–732行配置与运行调用；Sonnet4的7e56e668版本文件hash相同。
+These findings do not support treating every failed run as a valid right-censored observation. The current target “tokens needed for successful completion” remains a hypothesis whose label and identification conditions are unresolved.
 
-## 识别判断
+## Historical source audit
 
-目前支持的是“日志提供最终benchmark结果和观察用量”，没有直接证明完整前缀首次成功时点。对自然失败：同一继续过程未知、T>U未验证、条件独立删失未验证。超时标记也不能免除这三项要求；最终可成功仅为工作假设。
+The source registry in `configs/hal_stopping_sources.json` binds every expected HAL source version to the exact raw `git_info.repository_url` string and commit found in its archive. It preserves the archive URL verbatim; normalization is used only for links. The registry contains 12 observed repository+commit pairs and 22 source records. Nineteen source records have commit-pinned Git blob IDs; five HAL source files additionally match local receipt SHA-256 and byte counts. No source version was left unregistered.
 
-可以考虑成功终点的条件预测、机制有证据的子集、未知机制下的显式敏感性三条路线，但其评价对象不同。人工删失完整成功记录仅用于受控验证，不能补出自然失败的成功成本真值。本轮没有据此批准训练或选择survival模型。
+Source files actually read at commit-pinned revisions:
 
-## 继续调查的可执行步骤
+- SAB agent control flow at `science_agent.py` for commits `23fc566…` and `eb094b…` (write-program, step and solve paths).
+- HAL Generalist `main.py` at `bc575cd…`, `8a0e293…` and `6a44aed…` (budget callback / step-limit paths).
+- CORE `main.py` at `c7354eb…` and `7e56e66…` (budget and max-step paths).
+- SciCode agent `main.py` and evaluator `hal/benchmarks/scicode.py` at `0ac45fa…`; evaluator timeout is specifically classified as evaluation-side.
+- HAL TAU wrapper and `pyproject.toml` at `b64fc7c…`, plus pinned TAU dependency `807e348…` files `tau_bench/agents/tool_calling_agent.py` and `tau_bench/envs/base.py`.
+- SWE parent `.gitmodules` at `02a2500…` and `85513db…`, the corresponding parent gitlinks (`94f540c…` and `d872eb7…`), and the pinned SWE-agent `agents.py` and cost-limit configuration files at those submodule commits.
 
-按已冻结来源与历史commit建立本地机制索引；优先核对SAB评估日志与停止分支，随后读CORE/SWE保存的终止记录。每项分别记录规则存在、实际触发、是否可继续、是否观察中间成功及缺失。仅能从固定历史记录确定时才赋值，保留unknown；公开摘要不含逐题测试真值。
+The source registry is not a claim that every source file was independently byte-verified. Exact historical bytes were verified only where the existing local receipt matched. For other source files, the immutable Git blob ID and commit-pinned URL are recorded, but raw-byte SHA-256 remains null because this pass did not acquire raw bytes. The TAU dependency pin is recorded as a candidate: `pyproject.toml` contains more than one pin and archive metadata does not resolve which extra was installed for each run. Runtime package resolution remains unknown. Likewise, a parent gitlink identifies the SWE-agent commit but does not itself establish the runtime checkout or execution path.
 
-验收需覆盖当前候选中每个benchmark/scaffold的证据可得性，给出支持/不支持/未知及对研究目标的影响。以上初核未满足全部验收，因此该issue应保持开放。
+The registry captures source-level stopping mechanisms and relevant line ranges for review. It does not prove a mechanism was activated in any particular archived run. In particular, configured CORE step ceilings, evaluator timeout values and source branches must not be promoted to run-level stopping facts without corresponding execution evidence.
+
+## Private examples and reproducibility
+
+Private, task-key-locatable examples (not included in Git) are written to the controlled `data/derived/stopping_audit/review_examples.internal.json`: explicit timeout output, evaluation diagnostics, runs whose stopping reason remains unknown, and source versions without a local raw-byte receipt. Task IDs and raw excerpts stay in the private index.
+
+From the repository root, synthetic checks run with:
+
+```sh
+python3 -m unittest discover -s checks -p 'test_stopping_evidence.py' -v
+```
+
+The real read-only index requires the project’s existing HAL-derived inputs and the reviewed archive reader environment (including `cryptography`):
+
+```sh
+python3 tools/audit_stopping_evidence.py \
+  --data-root "/path/to/controlled-project" \
+  --source-index configs/hal_stopping_sources.json \
+  --private-output "/path/to/controlled-project/data/derived/stopping_audit" \
+  --public-output reports/research_audit/stopping_evidence_summary.json
+```
+
+The real run must be performed only against the frozen local HAL records. The public JSON is aggregate-only; per-run facts, input paths, IDs and excerpts are private and ignored by Git. Passing these checks validates the indexing contract, not the scientific assumptions or contribution.

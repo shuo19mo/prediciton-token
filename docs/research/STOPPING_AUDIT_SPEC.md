@@ -60,7 +60,11 @@
 | SciCode，3份归档 | `0ac45fa43a60658ec037b354b5039d3131317069` | `agents/scicode_example_agent/main.py`、`hal/benchmarks/scicode.py`；区分生成过程与评估进程 |
 | TAU airline，2份归档 | `b64fc7cc5c0aa7ea2fbf197d835805460bcf2e7b` | `agents/taubench_tool_calling/tool_calling.py`、`pyproject.toml`；从pin继续查tau依赖的solve和env.step |
 
-HAL源码入口格式：`https://github.com/princeton-pli/hal-harness/blob/<commit>/<path>`。将真正读取的完整URL、文件hash、相关行号及依赖pin记录进来源注册表。子模块仓库不能猜测，按对应版本的 `.gitmodules` 和gitlink核实。
+HAL源码入口必须按每份原始归档中的 `git_info.repository_url` 与 `git_info.commit` 绑定。保留 `repository_url` 的原始字符串；仅为生成可读链接或获取文件时规范化 SSH/HTTPS 与 `.git` 后缀。不得把其他fork或历史版本统一写成 `princeton-pli/hal-harness`。同一HAL commit下可能需要多个源文件。
+
+来源注册表按每个归档的原始仓库地址与commit列出文件。每项保留仓库原值、commit、路径、可点击URL、SHA256或明确的null、相关行号/符号、来源角色和验证缺口。优先使用冻结的本地回执；通过GitHub读取的内容若工具只返回文本或Git blob ID、无法验证原始字节SHA256，应保留SHA256为null并记录Git blob ID及原因。
+
+SciCode应分别登记agent生成文件与 `hal/benchmarks/scicode.py` evaluator；TAU应分别登记wrapper、该HAL commit的 `pyproject.toml`、其中可见的tau-bench依赖pin，以及对应依赖commit的 `solve` 和 `env.step` 源文件。若配置显示多个依赖pin而归档不能确定实际环境，逐项记录并将运行时依赖选择标为unknown。SWE应按HAL commit检查 `.gitmodules` 与 `agents/SWE-agent-v1.0` gitlink，再登记gitlink指向的SWE-agent源码与配置；父仓库、子模块仓库和两个子模块版本分别保留，不从同名配置推定版本一致。
 
 已复核的初步机制解释见 [STOPPING_EVIDENCE_AUDIT.md](STOPPING_EVIDENCE_AUDIT.md)：SAB Self-Debug有代码无变化、程序执行/输出文件等提前结束分支；Generalist费用回调曾把输入token计数用于输出计数；CORE配置40步不能当成实际触发证据。三者都有对应历史源码回执。
 

@@ -1,0 +1,760 @@
+{
+  "entries": [
+    {
+      "archive_repository_url_original": "git@github.com:boyiwei/hal-harness.git",
+      "bound_run_count": 50,
+      "hal_commit": "02a2500e9883ecc022b3eeae29bc5b557788b3c7",
+      "repository_normalized_for_links": "https://github.com/boyiwei/hal-harness",
+      "rule_scope": "swe_agent",
+      "run_commit_match": true,
+      "source_files": [
+        {
+          "bytes": null,
+          "commit": "02a2500e9883ecc022b3eeae29bc5b557788b3c7",
+          "content_verification": "immutable_git_blob_oid_recorded; raw-byte-sha256-unavailable",
+          "gap": "GitHub returned a commit-pinned readable source and git blob ID, but this run did not obtain raw bytes to verify SHA256.",
+          "git_blob_sha": "b2993c2425f67418620bc8329cc395e7caafaab1",
+          "path": ".gitmodules",
+          "relevant_line_ranges": [],
+          "relevant_symbols": [
+            "agents/SWE-agent-v1.0"
+          ],
+          "repository": "boyiwei/hal-harness",
+          "role": "submodule_source_map",
+          "sha256": null,
+          "url": "https://github.com/boyiwei/hal-harness/blob/02a2500e9883ecc022b3eeae29bc5b557788b3c7/.gitmodules",
+          "verification_source_url": null
+        },
+        {
+          "commit": "02a2500e9883ecc022b3eeae29bc5b557788b3c7",
+          "content_verification": "parent_commit_tree_gitlink_verified",
+          "gap": "A gitlink is a commit binding, not a file; its target sources are listed separately.",
+          "git_blob_sha": null,
+          "gitlink_commit": "94f540cd146775dc1c092251422167b776d3d0aa",
+          "path": "agents/SWE-agent-v1.0",
+          "repository": "boyiwei/hal-harness",
+          "role": "gitlink",
+          "sha256": null,
+          "url": "https://github.com/boyiwei/hal-harness/tree/02a2500e9883ecc022b3eeae29bc5b557788b3c7/agents/SWE-agent-v1.0"
+        },
+        {
+          "bytes": null,
+          "commit": "94f540cd146775dc1c092251422167b776d3d0aa",
+          "content_verification": "immutable_git_blob_oid_recorded; raw-byte-sha256-unavailable",
+          "gap": "GitHub returned a commit-pinned readable source and git blob ID, but this run did not obtain raw bytes to verify SHA256.",
+          "git_blob_sha": "aff6195f23d63ab916d7ffccc845449cfbe9233d",
+          "path": "sweagent/agent/agents.py",
+          "relevant_line_ranges": [
+            [
+              260,
+              380
+            ],
+            [
+              782,
+              858
+            ]
+          ],
+          "relevant_symbols": [
+            "cost_limit",
+            "autosubmit",
+            "error handling"
+          ],
+          "repository": "boyiwei/SWE-agent",
+          "role": "pinned_submodule_runtime",
+          "sha256": null,
+          "url": "https://github.com/boyiwei/SWE-agent/blob/94f540cd146775dc1c092251422167b776d3d0aa/sweagent/agent/agents.py",
+          "verification_source_url": null
+        },
+        {
+          "bytes": null,
+          "commit": "94f540cd146775dc1c092251422167b776d3d0aa",
+          "content_verification": "immutable_git_blob_oid_recorded; raw-byte-sha256-unavailable",
+          "gap": "GitHub returned a commit-pinned readable source and git blob ID, but this run did not obtain raw bytes to verify SHA256.",
+          "git_blob_sha": "c86c2f615ffa84b619485010952a098c79218deb",
+          "path": "config/250225_anthropic_filemap_simple_review.yaml",
+          "relevant_line_ranges": [
+            [
+              71,
+              73
+            ]
+          ],
+          "relevant_symbols": [
+            "per_instance_cost_limit",
+            "total_cost_limit"
+          ],
+          "repository": "boyiwei/SWE-agent",
+          "role": "pinned_submodule_runtime",
+          "sha256": null,
+          "url": "https://github.com/boyiwei/SWE-agent/blob/94f540cd146775dc1c092251422167b776d3d0aa/config/250225_anthropic_filemap_simple_review.yaml",
+          "verification_source_url": null
+        }
+      ],
+      "source_version_key": [
+        "git@github.com:boyiwei/hal-harness.git",
+        "02a2500e9883ecc022b3eeae29bc5b557788b3c7"
+      ]
+    },
+    {
+      "archive_repository_url_original": "https://github.com/peterkirgis/hal-harness.git",
+      "bound_run_count": 195,
+      "hal_commit": "0ac45fa43a60658ec037b354b5039d3131317069",
+      "repository_normalized_for_links": "https://github.com/peterkirgis/hal-harness",
+      "rule_scope": "scicode",
+      "run_commit_match": true,
+      "source_files": [
+        {
+          "bytes": null,
+          "commit": "0ac45fa43a60658ec037b354b5039d3131317069",
+          "content_verification": "immutable_git_blob_oid_recorded; raw-byte-sha256-unavailable",
+          "gap": "GitHub returned a commit-pinned readable source and git blob ID, but this run did not obtain raw bytes to verify SHA256.",
+          "git_blob_sha": "996971023aba816ebad3222289bcd5de21e35b93",
+          "path": "agents/scicode_example_agent/main.py",
+          "relevant_line_ranges": [
+            [
+              108,
+              139
+            ]
+          ],
+          "relevant_symbols": [
+            "for i in range(steps)"
+          ],
+          "repository": "peterkirgis/hal-harness",
+          "role": "agent_generation",
+          "sha256": null,
+          "url": "https://github.com/peterkirgis/hal-harness/blob/0ac45fa43a60658ec037b354b5039d3131317069/agents/scicode_example_agent/main.py",
+          "verification_source_url": null
+        },
+        {
+          "bytes": null,
+          "commit": "0ac45fa43a60658ec037b354b5039d3131317069",
+          "content_verification": "immutable_git_blob_oid_recorded; raw-byte-sha256-unavailable",
+          "gap": "GitHub returned a commit-pinned readable source and git blob ID, but this run did not obtain raw bytes to verify SHA256.",
+          "git_blob_sha": "9d295844af3f9f22b62529e0b66e943b96568a9e",
+          "path": "hal/benchmarks/scicode.py",
+          "relevant_line_ranges": [
+            [
+              104,
+              109
+            ],
+            [
+              132,
+              138
+            ]
+          ],
+          "relevant_symbols": [
+            "timeout 60",
+            "subprocess"
+          ],
+          "repository": "peterkirgis/hal-harness",
+          "role": "evaluator_runtime",
+          "sha256": null,
+          "url": "https://github.com/peterkirgis/hal-harness/blob/0ac45fa43a60658ec037b354b5039d3131317069/hal/benchmarks/scicode.py",
+          "verification_source_url": null
+        }
+      ],
+      "source_version_key": [
+        "https://github.com/peterkirgis/hal-harness.git",
+        "0ac45fa43a60658ec037b354b5039d3131317069"
+      ]
+    },
+    {
+      "archive_repository_url_original": "https://github.com/OSU-NLP-Group/hal-harness.git",
+      "bound_run_count": 204,
+      "hal_commit": "23fc5665d6804fa72240f479e38f73fb53600002",
+      "repository_normalized_for_links": "https://github.com/OSU-NLP-Group/hal-harness",
+      "rule_scope": "sab_self_debug",
+      "run_commit_match": true,
+      "source_files": [
+        {
+          "bytes": 12389,
+          "commit": "23fc5665d6804fa72240f479e38f73fb53600002",
+          "content_verification": "local_receipt_sha256_verified",
+          "gap": null,
+          "git_blob_sha": "04abb4ea7729476f2221be2dc8ef10df9de60558",
+          "path": "agents/sab_example_agent/science_agent.py",
+          "relevant_line_ranges": [
+            [
+              94,
+              125
+            ],
+            [
+              166,
+              218
+            ],
+            [
+              220,
+              253
+            ]
+          ],
+          "relevant_symbols": [
+            "write_program",
+            "step",
+            "solve_task"
+          ],
+          "repository": "OSU-NLP-Group/hal-harness",
+          "role": "agent_control_flow",
+          "sha256": "46d1f4c06d98518d3d90eb369939a79d7db7917a78e93ff786f804a39e8b56a6",
+          "url": "https://github.com/OSU-NLP-Group/hal-harness/blob/23fc5665d6804fa72240f479e38f73fb53600002/agents/sab_example_agent/science_agent.py",
+          "verification_source_url": "https://raw.githubusercontent.com/princeton-pli/hal-harness/23fc5665d6804fa72240f479e38f73fb53600002/agents/sab_example_agent/science_agent.py"
+        }
+      ],
+      "source_version_key": [
+        "https://github.com/OSU-NLP-Group/hal-harness.git",
+        "23fc5665d6804fa72240f479e38f73fb53600002"
+      ]
+    },
+    {
+      "archive_repository_url_original": "https://github.com/benediktstroebl/hal-harness.git",
+      "bound_run_count": 50,
+      "hal_commit": "6a44aedf5ca8bfc81f9354658a4f66553eee730d",
+      "repository_normalized_for_links": "https://github.com/benediktstroebl/hal-harness",
+      "rule_scope": "hal_generalist",
+      "run_commit_match": true,
+      "source_files": [
+        {
+          "bytes": null,
+          "commit": "6a44aedf5ca8bfc81f9354658a4f66553eee730d",
+          "content_verification": "immutable_git_blob_oid_recorded; raw-byte-sha256-unavailable",
+          "gap": "GitHub returned a commit-pinned readable source and git blob ID, but this run did not obtain raw bytes to verify SHA256.",
+          "git_blob_sha": "8ef6e1c1699204d671aa51c728e83dc1dd516601",
+          "path": "agents/hal_generalist_agent/main.py",
+          "relevant_line_ranges": [
+            [
+              101,
+              108
+            ],
+            [
+              518,
+              520
+            ]
+          ],
+          "relevant_symbols": [
+            "check_budget_exceeded",
+            "max_steps",
+            "solve_task"
+          ],
+          "repository": "benediktstroebl/hal-harness",
+          "role": "agent_control_flow",
+          "sha256": null,
+          "url": "https://github.com/benediktstroebl/hal-harness/blob/6a44aedf5ca8bfc81f9354658a4f66553eee730d/agents/hal_generalist_agent/main.py",
+          "verification_source_url": null
+        }
+      ],
+      "source_version_key": [
+        "https://github.com/benediktstroebl/hal-harness.git",
+        "6a44aedf5ca8bfc81f9354658a4f66553eee730d"
+      ]
+    },
+    {
+      "archive_repository_url_original": "https://github.com/princeton-pli/hal-harness.git",
+      "bound_run_count": 45,
+      "hal_commit": "7e56e6688e288e8db86b3612b551370330ae218d",
+      "repository_normalized_for_links": "https://github.com/princeton-pli/hal-harness",
+      "rule_scope": "core_agent",
+      "run_commit_match": true,
+      "source_files": [
+        {
+          "bytes": 29680,
+          "commit": "7e56e6688e288e8db86b3612b551370330ae218d",
+          "content_verification": "local_receipt_sha256_verified",
+          "gap": null,
+          "git_blob_sha": "3839a0fa8b5a5e11926b5fd4a73099eda3781d4d",
+          "path": "agents/core_agent/main.py",
+          "relevant_line_ranges": [
+            [
+              89,
+              99
+            ],
+            [
+              505,
+              509
+            ],
+            [
+              725,
+              732
+            ]
+          ],
+          "relevant_symbols": [
+            "check_budget_exceeded",
+            "max_steps",
+            "budget"
+          ],
+          "repository": "princeton-pli/hal-harness",
+          "role": "agent_control_flow",
+          "sha256": "994e2e84f792b17ee62081001559c41f06299150dd95db0e9c9819ebce4c433c",
+          "url": "https://github.com/princeton-pli/hal-harness/blob/7e56e6688e288e8db86b3612b551370330ae218d/agents/core_agent/main.py",
+          "verification_source_url": "https://raw.githubusercontent.com/princeton-pli/hal-harness/7e56e6688e288e8db86b3612b551370330ae218d/agents/core_agent/main.py"
+        }
+      ],
+      "source_version_key": [
+        "https://github.com/princeton-pli/hal-harness.git",
+        "7e56e6688e288e8db86b3612b551370330ae218d"
+      ]
+    },
+    {
+      "archive_repository_url_original": "git@github.com:boyiwei/hal-harness.git",
+      "bound_run_count": 50,
+      "hal_commit": "85513dbe3ac92d135c304cd9ef5920e5a78f436f",
+      "repository_normalized_for_links": "https://github.com/boyiwei/hal-harness",
+      "rule_scope": "swe_agent",
+      "run_commit_match": true,
+      "source_files": [
+        {
+          "bytes": null,
+          "commit": "85513dbe3ac92d135c304cd9ef5920e5a78f436f",
+          "content_verification": "immutable_git_blob_oid_recorded; raw-byte-sha256-unavailable",
+          "gap": "GitHub returned a commit-pinned readable source and git blob ID, but this run did not obtain raw bytes to verify SHA256.",
+          "git_blob_sha": "a7294c2574ac3635a7ca82df4ec1b4f41bcd4250",
+          "path": ".gitmodules",
+          "relevant_line_ranges": [],
+          "relevant_symbols": [
+            "agents/SWE-agent-v1.0"
+          ],
+          "repository": "boyiwei/hal-harness",
+          "role": "submodule_source_map",
+          "sha256": null,
+          "url": "https://github.com/boyiwei/hal-harness/blob/85513dbe3ac92d135c304cd9ef5920e5a78f436f/.gitmodules",
+          "verification_source_url": null
+        },
+        {
+          "commit": "85513dbe3ac92d135c304cd9ef5920e5a78f436f",
+          "content_verification": "parent_commit_tree_gitlink_verified",
+          "gap": "A gitlink is a commit binding, not a file; its target sources are listed separately.",
+          "git_blob_sha": null,
+          "gitlink_commit": "d872eb743ef9db31b31c253a8d26b31eb4349ac0",
+          "path": "agents/SWE-agent-v1.0",
+          "repository": "boyiwei/hal-harness",
+          "role": "gitlink",
+          "sha256": null,
+          "url": "https://github.com/boyiwei/hal-harness/tree/85513dbe3ac92d135c304cd9ef5920e5a78f436f/agents/SWE-agent-v1.0"
+        },
+        {
+          "bytes": null,
+          "commit": "d872eb743ef9db31b31c253a8d26b31eb4349ac0",
+          "content_verification": "immutable_git_blob_oid_recorded; raw-byte-sha256-unavailable",
+          "gap": "GitHub returned a commit-pinned readable source and git blob ID, but this run did not obtain raw bytes to verify SHA256.",
+          "git_blob_sha": "a53cc29b14a8efbecbb6b37b67882c3dcd6d8c7d",
+          "path": "sweagent/agent/agents.py",
+          "relevant_line_ranges": [
+            [
+              296,
+              417
+            ],
+            [
+              829,
+              905
+            ]
+          ],
+          "relevant_symbols": [
+            "cost_limit",
+            "autosubmit",
+            "error handling"
+          ],
+          "repository": "boyiwei/SWE-agent",
+          "role": "pinned_submodule_runtime",
+          "sha256": null,
+          "url": "https://github.com/boyiwei/SWE-agent/blob/d872eb743ef9db31b31c253a8d26b31eb4349ac0/sweagent/agent/agents.py",
+          "verification_source_url": null
+        },
+        {
+          "bytes": null,
+          "commit": "d872eb743ef9db31b31c253a8d26b31eb4349ac0",
+          "content_verification": "immutable_git_blob_oid_recorded; raw-byte-sha256-unavailable",
+          "gap": "GitHub returned a commit-pinned readable source and git blob ID, but this run did not obtain raw bytes to verify SHA256.",
+          "git_blob_sha": "c86c2f615ffa84b619485010952a098c79218deb",
+          "path": "config/benchmarks/250225_anthropic_filemap_simple_review.yaml",
+          "relevant_line_ranges": [
+            [
+              71,
+              73
+            ]
+          ],
+          "relevant_symbols": [
+            "per_instance_cost_limit",
+            "total_cost_limit"
+          ],
+          "repository": "boyiwei/SWE-agent",
+          "role": "pinned_submodule_runtime",
+          "sha256": null,
+          "url": "https://github.com/boyiwei/SWE-agent/blob/d872eb743ef9db31b31c253a8d26b31eb4349ac0/config/benchmarks/250225_anthropic_filemap_simple_review.yaml",
+          "verification_source_url": null
+        }
+      ],
+      "source_version_key": [
+        "git@github.com:boyiwei/hal-harness.git",
+        "85513dbe3ac92d135c304cd9ef5920e5a78f436f"
+      ]
+    },
+    {
+      "archive_repository_url_original": "https://github.com/benediktstroebl/hal-harness.git",
+      "bound_run_count": 50,
+      "hal_commit": "8a0e2933c7e2b6162c149810aff02a3d4cbcd48c",
+      "repository_normalized_for_links": "https://github.com/benediktstroebl/hal-harness",
+      "rule_scope": "hal_generalist",
+      "run_commit_match": true,
+      "source_files": [
+        {
+          "bytes": null,
+          "commit": "8a0e2933c7e2b6162c149810aff02a3d4cbcd48c",
+          "content_verification": "immutable_git_blob_oid_recorded; raw-byte-sha256-unavailable",
+          "gap": "GitHub returned a commit-pinned readable source and git blob ID, but this run did not obtain raw bytes to verify SHA256.",
+          "git_blob_sha": "96b3d5c190761895d3059411c7f994e546655d87",
+          "path": "agents/hal_generalist_agent/main.py",
+          "relevant_line_ranges": [
+            [
+              465,
+              465
+            ],
+            [
+              577,
+              577
+            ],
+            [
+              1073,
+              1073
+            ]
+          ],
+          "relevant_symbols": [
+            "check_budget_exceeded",
+            "max_steps",
+            "solve_task"
+          ],
+          "repository": "benediktstroebl/hal-harness",
+          "role": "agent_control_flow",
+          "sha256": null,
+          "url": "https://github.com/benediktstroebl/hal-harness/blob/8a0e2933c7e2b6162c149810aff02a3d4cbcd48c/agents/hal_generalist_agent/main.py",
+          "verification_source_url": null
+        }
+      ],
+      "source_version_key": [
+        "https://github.com/benediktstroebl/hal-harness.git",
+        "8a0e2933c7e2b6162c149810aff02a3d4cbcd48c"
+      ]
+    },
+    {
+      "archive_repository_url_original": "https://github.com/princeton-pli/hal-harness",
+      "bound_run_count": 100,
+      "hal_commit": "b64fc7cc5c0aa7ea2fbf197d835805460bcf2e7b",
+      "repository_normalized_for_links": "https://github.com/princeton-pli/hal-harness",
+      "rule_scope": "taubench",
+      "run_commit_match": true,
+      "source_files": [
+        {
+          "bytes": null,
+          "commit": "b64fc7cc5c0aa7ea2fbf197d835805460bcf2e7b",
+          "content_verification": "immutable_git_blob_oid_recorded; raw-byte-sha256-unavailable",
+          "gap": "GitHub returned a commit-pinned readable source and git blob ID, but this run did not obtain raw bytes to verify SHA256.",
+          "git_blob_sha": "e7076a2781d46c0e7c8b4935a2d25205a7bc1ddd",
+          "path": "agents/taubench_tool_calling/tool_calling.py",
+          "relevant_line_ranges": [
+            [
+              37,
+              42
+            ]
+          ],
+          "relevant_symbols": [
+            "agent.solve",
+            "taken_actions"
+          ],
+          "repository": "princeton-pli/hal-harness",
+          "role": "agent_wrapper",
+          "sha256": null,
+          "url": "https://github.com/princeton-pli/hal-harness/blob/b64fc7cc5c0aa7ea2fbf197d835805460bcf2e7b/agents/taubench_tool_calling/tool_calling.py",
+          "verification_source_url": null
+        },
+        {
+          "bytes": null,
+          "commit": "b64fc7cc5c0aa7ea2fbf197d835805460bcf2e7b",
+          "content_verification": "immutable_git_blob_oid_recorded; raw-byte-sha256-unavailable",
+          "dependency_pin_candidates": [
+            {
+              "commit": "807e348b46a225242d5a045a8cecc690719e4b21",
+              "lines": [
+                40,
+                50,
+                62
+              ],
+              "repository": "benediktstroebl/tau-bench",
+              "resolved_for_each_run": "unknown"
+            },
+            {
+              "commit": "bef42de85cdbfb5490e6f3bd19d8e053df977e08",
+              "lines": [
+                74
+              ],
+              "repository": "benediktstroebl/tau-bench",
+              "resolved_for_each_run": "unknown"
+            }
+          ],
+          "gap": "GitHub returned a commit-pinned readable source and git blob ID, but this run did not obtain raw bytes to verify SHA256.",
+          "git_blob_sha": "eda0509441ce76eda8592fa41f5f238d34af15c9",
+          "path": "pyproject.toml",
+          "relevant_line_ranges": [
+            [
+              39,
+              40
+            ],
+            [
+              49,
+              50
+            ],
+            [
+              61,
+              62
+            ],
+            [
+              73,
+              74
+            ]
+          ],
+          "relevant_symbols": [
+            "tau-bench git dependency pins"
+          ],
+          "repository": "princeton-pli/hal-harness",
+          "role": "dependency_configuration",
+          "sha256": null,
+          "url": "https://github.com/princeton-pli/hal-harness/blob/b64fc7cc5c0aa7ea2fbf197d835805460bcf2e7b/pyproject.toml",
+          "verification_source_url": null
+        },
+        {
+          "bytes": null,
+          "commit": "807e348b46a225242d5a045a8cecc690719e4b21",
+          "content_verification": "immutable_git_blob_oid_recorded; raw-byte-sha256-unavailable",
+          "gap": "GitHub returned a commit-pinned readable source and git blob ID, but this run did not obtain raw bytes to verify SHA256.",
+          "git_blob_sha": "f270b9aaddebabd4cdc9a6b947f6a4507d6f958e",
+          "path": "tau_bench/agents/tool_calling_agent.py",
+          "relevant_line_ranges": [
+            [
+              27,
+              40
+            ],
+            [
+              73,
+              73
+            ]
+          ],
+          "relevant_symbols": [
+            "solve",
+            "max_num_steps",
+            "done"
+          ],
+          "repository": "benediktstroebl/tau-bench",
+          "role": "pinned_tau_dependency_runtime",
+          "sha256": null,
+          "url": "https://github.com/benediktstroebl/tau-bench/blob/807e348b46a225242d5a045a8cecc690719e4b21/tau_bench/agents/tool_calling_agent.py",
+          "verification_source_url": null
+        },
+        {
+          "bytes": null,
+          "commit": "807e348b46a225242d5a045a8cecc690719e4b21",
+          "content_verification": "immutable_git_blob_oid_recorded; raw-byte-sha256-unavailable",
+          "gap": "GitHub returned a commit-pinned readable source and git blob ID, but this run did not obtain raw bytes to verify SHA256.",
+          "git_blob_sha": "632f060c82c960cbc62b5dfe8a666815468d7d0d",
+          "path": "tau_bench/envs/base.py",
+          "relevant_line_ranges": [
+            [
+              91,
+              120
+            ]
+          ],
+          "relevant_symbols": [
+            "step",
+            "actions.append",
+            "done"
+          ],
+          "repository": "benediktstroebl/tau-bench",
+          "role": "pinned_tau_dependency_runtime",
+          "sha256": null,
+          "url": "https://github.com/benediktstroebl/tau-bench/blob/807e348b46a225242d5a045a8cecc690719e4b21/tau_bench/envs/base.py",
+          "verification_source_url": null
+        }
+      ],
+      "source_version_key": [
+        "https://github.com/princeton-pli/hal-harness",
+        "b64fc7cc5c0aa7ea2fbf197d835805460bcf2e7b"
+      ]
+    },
+    {
+      "archive_repository_url_original": "https://github.com/benediktstroebl/hal-harness.git",
+      "bound_run_count": 102,
+      "hal_commit": "bc575cd58bdb0a203c08952169df7e5d3330b8d8",
+      "repository_normalized_for_links": "https://github.com/benediktstroebl/hal-harness",
+      "rule_scope": "hal_generalist",
+      "run_commit_match": true,
+      "source_files": [
+        {
+          "bytes": 53811,
+          "commit": "bc575cd58bdb0a203c08952169df7e5d3330b8d8",
+          "content_verification": "local_receipt_sha256_verified",
+          "gap": null,
+          "git_blob_sha": "8eacfaa33a981aafd85089d8b8e7b5143d342607",
+          "path": "agents/hal_generalist_agent/main.py",
+          "relevant_line_ranges": [
+            [
+              90,
+              99
+            ],
+            [
+              507,
+              509
+            ]
+          ],
+          "relevant_symbols": [
+            "check_budget_exceeded",
+            "max_steps",
+            "solve_task"
+          ],
+          "repository": "benediktstroebl/hal-harness",
+          "role": "agent_control_flow",
+          "sha256": "71d1287b61e31f8a1c06d3ce8d37d31332553e3c6b505eed77e7b72b2aaa26dc",
+          "url": "https://github.com/benediktstroebl/hal-harness/blob/bc575cd58bdb0a203c08952169df7e5d3330b8d8/agents/hal_generalist_agent/main.py",
+          "verification_source_url": "https://raw.githubusercontent.com/princeton-pli/hal-harness/bc575cd58bdb0a203c08952169df7e5d3330b8d8/agents/hal_generalist_agent/main.py"
+        }
+      ],
+      "source_version_key": [
+        "https://github.com/benediktstroebl/hal-harness.git",
+        "bc575cd58bdb0a203c08952169df7e5d3330b8d8"
+      ]
+    },
+    {
+      "archive_repository_url_original": "https://github.com/princeton-pli/hal-harness.git",
+      "bound_run_count": 45,
+      "hal_commit": "c7354ebd3ce3d284e3c89150e1218836c42eccac",
+      "repository_normalized_for_links": "https://github.com/princeton-pli/hal-harness",
+      "rule_scope": "core_agent",
+      "run_commit_match": true,
+      "source_files": [
+        {
+          "bytes": 29680,
+          "commit": "c7354ebd3ce3d284e3c89150e1218836c42eccac",
+          "content_verification": "local_receipt_sha256_verified",
+          "gap": null,
+          "git_blob_sha": "3839a0fa8b5a5e11926b5fd4a73099eda3781d4d",
+          "path": "agents/core_agent/main.py",
+          "relevant_line_ranges": [
+            [
+              89,
+              99
+            ],
+            [
+              505,
+              509
+            ],
+            [
+              725,
+              732
+            ]
+          ],
+          "relevant_symbols": [
+            "check_budget_exceeded",
+            "max_steps",
+            "budget"
+          ],
+          "repository": "princeton-pli/hal-harness",
+          "role": "agent_control_flow",
+          "sha256": "994e2e84f792b17ee62081001559c41f06299150dd95db0e9c9819ebce4c433c",
+          "url": "https://github.com/princeton-pli/hal-harness/blob/c7354ebd3ce3d284e3c89150e1218836c42eccac/agents/core_agent/main.py",
+          "verification_source_url": "https://raw.githubusercontent.com/princeton-pli/hal-harness/c7354ebd3ce3d284e3c89150e1218836c42eccac/agents/core_agent/main.py"
+        }
+      ],
+      "source_version_key": [
+        "https://github.com/princeton-pli/hal-harness.git",
+        "c7354ebd3ce3d284e3c89150e1218836c42eccac"
+      ]
+    },
+    {
+      "archive_repository_url_original": "https://github.com/OSU-NLP-Group/hal-harness.git",
+      "bound_run_count": 204,
+      "hal_commit": "eb094b928198c6e1029a8e0c247576c78a1fe9f7",
+      "repository_normalized_for_links": "https://github.com/OSU-NLP-Group/hal-harness",
+      "rule_scope": "sab_self_debug",
+      "run_commit_match": true,
+      "source_files": [
+        {
+          "bytes": null,
+          "commit": "eb094b928198c6e1029a8e0c247576c78a1fe9f7",
+          "content_verification": "immutable_git_blob_oid_recorded; raw-byte-sha256-unavailable",
+          "gap": "GitHub returned a commit-pinned readable source and git blob ID, but this run did not obtain raw bytes to verify SHA256.",
+          "git_blob_sha": "04abb4ea7729476f2221be2dc8ef10df9de60558",
+          "path": "agents/sab_example_agent/science_agent.py",
+          "relevant_line_ranges": [
+            [
+              94,
+              125
+            ],
+            [
+              166,
+              218
+            ],
+            [
+              220,
+              253
+            ]
+          ],
+          "relevant_symbols": [
+            "write_program",
+            "step",
+            "solve_task"
+          ],
+          "repository": "OSU-NLP-Group/hal-harness",
+          "role": "agent_control_flow",
+          "sha256": null,
+          "url": "https://github.com/OSU-NLP-Group/hal-harness/blob/eb094b928198c6e1029a8e0c247576c78a1fe9f7/agents/sab_example_agent/science_agent.py",
+          "verification_source_url": null
+        }
+      ],
+      "source_version_key": [
+        "https://github.com/OSU-NLP-Group/hal-harness.git",
+        "eb094b928198c6e1029a8e0c247576c78a1fe9f7"
+      ]
+    },
+    {
+      "archive_repository_url_original": "https://github.com/benediktstroebl/hal-harness.git",
+      "bound_run_count": 102,
+      "hal_commit": "edfe626b0e96fbf92fb8a41a705e31205d716e1e",
+      "repository_normalized_for_links": "https://github.com/benediktstroebl/hal-harness",
+      "rule_scope": "sab_self_debug",
+      "run_commit_match": true,
+      "source_files": [
+        {
+          "bytes": 12389,
+          "commit": "edfe626b0e96fbf92fb8a41a705e31205d716e1e",
+          "content_verification": "local_receipt_sha256_verified",
+          "gap": null,
+          "git_blob_sha": null,
+          "path": "agents/sab_example_agent/science_agent.py",
+          "relevant_line_ranges": [
+            [
+              94,
+              125
+            ],
+            [
+              166,
+              218
+            ],
+            [
+              220,
+              253
+            ]
+          ],
+          "relevant_symbols": [
+            "write_program",
+            "step",
+            "solve_task"
+          ],
+          "repository": "benediktstroebl/hal-harness",
+          "role": "agent_control_flow",
+          "sha256": "46d1f4c06d98518d3d90eb369939a79d7db7917a78e93ff786f804a39e8b56a6",
+          "url": "https://github.com/benediktstroebl/hal-harness/blob/edfe626b0e96fbf92fb8a41a705e31205d716e1e/agents/sab_example_agent/science_agent.py",
+          "verification_source_url": "https://raw.githubusercontent.com/princeton-pli/hal-harness/edfe626b0e96fbf92fb8a41a705e31205d716e1e/agents/sab_example_agent/science_agent.py"
+        }
+      ],
+      "source_version_key": [
+        "https://github.com/benediktstroebl/hal-harness.git",
+        "edfe626b0e96fbf92fb8a41a705e31205d716e1e"
+      ]
+    }
+  ],
+  "schema_version": "hal-stopping-sources-v2",
+  "unregistered_source_versions": []
+}

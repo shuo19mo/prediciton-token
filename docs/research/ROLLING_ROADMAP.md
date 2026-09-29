@@ -79,10 +79,22 @@ M0通过表示有可靠接手诊断与下一研究问题，不表示目标可识
 
 ## 方法与训练的决策边界
 
-旧[实验规格](../handoff/EXPERIMENT_SPEC.md)及机器规格保留为**候选设计v1和工程接口**。固定模型、表示、网格、折数、主比较族尚非已批准的新研究路线；M2/M3可依据支持与反证修订。正式训练之前按版本重新冻结，评估实现也必须对应新规格，不能只改文字。
+本地旧实验规格 `docs/handoff/EXPERIMENT_SPEC.md`及机器规格保留为**候选设计v1和工程接口**。固定模型、表示、网格、折数、主比较族尚非已批准的新研究路线；M2/M3可依据支持与反证修订。正式训练之前按版本重新冻结，评估实现也必须对应新规格，不能只改文字。
 
 目前比较三种行动：可观察成功终点预测（可直接评价，但选择偏差与科学重要性待查）；有机制支持的失败子集（当前证据不足）；机制未知下的敏感性分析（能描述假设依赖，不能恢复不存在的潜在真值）。暂不决定其中哪一种能形成贡献，更不预设survival有效。
 
 研究负责人处理文献、数据、定义、实验设计、独立评价和证据成熟后的写作；师兄处理模型实现、训练和调参。等待训练时继续不依赖预测的开放issue，不代签统计决定，不自动联系他人。
 
 写作需M5证据验收和贡献审查通过后进入M6；旧初稿不约束研究方向。稿件完成、内部投稿检查通过、实际投稿和录用分别记录，不能互相替代。
+
+## GitHub对象索引（仅链接，不镜像状态）
+
+- [M0 milestone](https://github.com/shuo19mo/prediciton-token/milestone/1) · [主issue #1](https://github.com/shuo19mo/prediciton-token/issues/1)
+- [M1 milestone](https://github.com/shuo19mo/prediciton-token/milestone/2) · [主issue #2](https://github.com/shuo19mo/prediciton-token/issues/2)
+- [M2 milestone](https://github.com/shuo19mo/prediciton-token/milestone/3) · [主issue #3](https://github.com/shuo19mo/prediciton-token/issues/3)
+- [M3 milestone](https://github.com/shuo19mo/prediciton-token/milestone/4) · [主issue #4](https://github.com/shuo19mo/prediciton-token/issues/4)
+- [M4 milestone](https://github.com/shuo19mo/prediciton-token/milestone/5) · [主issue #5](https://github.com/shuo19mo/prediciton-token/issues/5)
+- [M5 milestone](https://github.com/shuo19mo/prediciton-token/milestone/6) · [主issue #6](https://github.com/shuo19mo/prediciton-token/issues/6)
+- [M6 milestone](https://github.com/shuo19mo/prediciton-token/milestone/7) · [主issue #7](https://github.com/shuo19mo/prediciton-token/issues/7)
+
+当前M0子issues：[事实复核 #8](https://github.com/shuo19mo/prediciton-token/issues/8)、[停止机制 #9](https://github.com/shuo19mo/prediciton-token/issues/9)、[阶段验收 #10](https://github.com/shuo19mo/prediciton-token/issues/10)。

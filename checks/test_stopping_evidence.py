@@ -1,4 +1,6 @@
 import importlib.util
+import hashlib
+import tempfile
 import unittest
 from pathlib import Path
 
@@ -10,6 +12,69 @@ SPEC.loader.exec_module(audit)
 
 
 class StoppingEvidenceSemanticsTests(unittest.TestCase):
+    def test_production_task_evidence_keeps_timeout_and_evaluator_log_separate(self):
+        archive = {"raw_eval_results": {
+            "agent_output": {"synthetic-task": "TIMEOUT synthetic marker"},
+            "eval_result": {"synthetic-task": {"log_info": "synthetic evaluator diagnostic"}},
+        }}
+        run = {"benchmark": "scienceagentbench", "task_id": "synthetic-task"}
+        result = audit._archive_task_evidence(archive, run)
+        self.assertEqual(result["join_status"], "exact_task_key")
+        self.assertEqual(result["raw_record_pointer"], "raw_eval_results/agent_output/synthetic-task")
+        layers_codes = {(item["layer"], item["code"]) for item in result["observations"]}
+        self.assertIn(("task_runtime_marker", "explicit_timeout_prefix"), layers_codes)
+        self.assertIn(("evaluation_diagnostic", "eval_log_info"), layers_codes)
+        self.assertEqual(result["task_termination"]["status"], "unknown")
+        self.assertEqual({item["status"] for item in result["identification_assessment"].values()}, {"unknown"})
+
+    def test_relation_validation_rejects_duplicate_episode_and_orphan_candidate(self):
+        valid_run = {"episode_id": "synthetic-e1", "benchmark": "synthetic", "config_id": "cfg"}
+        valid_labels = [
+            {"episode_id": "synthetic-e1", "benchmark": "synthetic", "config_id": "cfg", "protocol": "A"},
+            {"episode_id": "synthetic-e1", "benchmark": "synthetic", "config_id": "cfg", "protocol": "B"},
+        ]
+        audit._validate_run_label_relations([valid_run], valid_labels)
+        with self.assertRaises(audit.AuditError):
+            audit._validate_run_label_relations([valid_run, dict(valid_run)], valid_labels)
+        with self.assertRaises(audit.AuditError):
+            audit._validate_run_label_relations([valid_run], valid_labels + [{**valid_labels[0], "episode_id": "dangling"}])
+
+    def test_file_receipt_validation_rejects_hash_and_size_drift(self):
+        with tempfile.TemporaryDirectory() as temp_dir:
+            path = Path(temp_dir) / "synthetic.json"
+            path.write_bytes(b'{"synthetic":true}')
+            expected_hash = hashlib.sha256(path.read_bytes()).hexdigest()
+            self.assertTrue(audit._verify_file_receipt(path, path.stat().st_size, expected_hash, "synthetic receipt"))
+            with self.assertRaises(audit.AuditError):
+                audit._verify_file_receipt(path, path.stat().st_size + 1, expected_hash, "synthetic size drift")
+            with self.assertRaises(audit.AuditError):
+                audit._verify_file_receipt(path, path.stat().st_size, "0" * 64, "synthetic hash drift")
+
+    def test_synthetic_evidence_index_serialization_is_repeatable_and_read_only(self):
+        with tempfile.TemporaryDirectory() as temp_dir:
+            input_path = Path(temp_dir) / "synthetic-input.json"
+            input_path.write_text('{"synthetic":"fixture"}', encoding="utf-8")
+            before = audit.sha256_file(input_path)
+            rows = [{"episode_id": "synthetic-e1", "observations": [
+                {"layer": "task_runtime_marker", "code": "explicit_timeout_prefix"},
+                {"layer": "evaluation_diagnostic", "code": "eval_log_info"},
+            ], "identification_assessment": audit._identification_unknown("synthetic fixture") }]
+            first_payload, first_hash = audit._serialize_evidence_rows(rows)
+            second_payload, second_hash = audit._serialize_evidence_rows(rows)
+            self.assertEqual(first_payload, second_payload)
+            self.assertEqual(first_hash, second_hash)
+            self.assertEqual(first_hash, hashlib.sha256(first_payload.encode("utf-8")).hexdigest())
+            self.assertEqual(audit.sha256_file(input_path), before)
+
+    def test_presence_aggregates_keep_present_and_empty_diagnostics_distinct(self):
+        rows = [
+            {"in_B_failure_subset": True, "observations": [{"layer": "evaluation_diagnostic", "code": "eval_log_info", "presence": "present"}]},
+            {"in_B_failure_subset": True, "observations": [{"layer": "evaluation_diagnostic", "code": "eval_log_info", "presence": "empty"}]},
+            {"in_B_failure_subset": False, "observations": [{"layer": "evaluation_diagnostic", "code": "eval_log_info", "presence": "present"}]},
+        ]
+        self.assertEqual(audit._aggregate_observation_presence(rows, b_subset=True)["evaluation_diagnostic"]["eval_log_info"], {"empty": 1, "present": 1})
+        self.assertEqual(audit._aggregate_observation_presence(rows)["evaluation_diagnostic"]["eval_log_info"], {"empty": 1, "present": 2})
+
     def test_source_registration_requires_exact_archive_repository_and_commit_pair(self):
         commit = "23fc5665d6804fa72240f479e38f73fb53600002"
         origin = audit.EXPECTED_REPOSITORY_BY_COMMIT[commit]

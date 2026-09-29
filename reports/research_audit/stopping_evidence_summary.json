@@ -39,13 +39,13 @@
     "raw_task_join_status": {
       "exact_task_key": 1197
     },
-    "source_files_total": 22,
-    "source_git_blob_pinned_files": 19,
+    "source_files_total": 24,
+    "source_git_blob_pinned_files": 21,
     "source_sha256_verified_files": 5,
     "source_versions_expected": 12,
     "unregistered_source_version_count": 0
   },
-  "evidence_content_sha256": "4948de41de9d8a346abaefb07ab6b8883ac3b3d43242a71440065ef4cedbb137",
+  "evidence_content_sha256": "715fdd9972a7991ca479882a45e3fbf38be6aaa84471fbb954441740b2eb07e4",
   "evidence_coverage_B_failure_subset": {
     "call_finish_reason": {
       "finish_reason_observed": 4884
@@ -81,7 +81,88 @@
       "explicit_error_prefix": 1,
       "explicit_timeout_prefix": 2,
       "raw_reward_observed": 99,
-      "raw_taken_actions_observed": 99
+      "raw_taken_actions_observed": 99,
+      "tau_candidate_step_default_comparison": 99
+    }
+  },
+  "evidence_presence_B_failure_subset": {
+    "call_finish_reason": {
+      "finish_reason_observed": {
+        "present": 4884
+      }
+    },
+    "configuration_rule": {
+      "configuration_value_matched": {
+        "present": 570
+      }
+    },
+    "evaluation_diagnostic": {
+      "eval_log_info": {
+        "empty": 18,
+        "present": 460
+      },
+      "raw_error_observed": {
+        "present": 1
+      },
+      "swe_result_membership": {
+        "present": 77
+      }
+    },
+    "task_runtime_marker": {
+      "explicit_timeout_prefix": {
+        "present": 2
+      }
+    }
+  },
+  "evidence_presence_all_runs": {
+    "call_finish_reason": {
+      "finish_reason_not_recorded": {
+        "absent": 32
+      },
+      "finish_reason_observed": {
+        "present": 12297
+      },
+      "no_exact_task_call_join": {
+        "uninspected": 4
+      }
+    },
+    "configuration_rule": {
+      "configuration_value_matched": {
+        "present": 852
+      }
+    },
+    "evaluation_diagnostic": {
+      "eval_log_info": {
+        "empty": 19,
+        "present": 593
+      },
+      "raw_error_observed": {
+        "present": 26
+      },
+      "scicode_details_entry": {
+        "empty": 82,
+        "present": 113
+      },
+      "swe_result_membership": {
+        "present": 200
+      }
+    },
+    "task_runtime_marker": {
+      "explicit_error_prefix": {
+        "present": 1
+      },
+      "explicit_timeout_prefix": {
+        "present": 2
+      },
+      "raw_reward_observed": {
+        "present": 99
+      },
+      "raw_taken_actions_observed": {
+        "present": 99
+      },
+      "tau_candidate_step_default_comparison": {
+        "present": 99
+      }
     }
   },
   "explicit_raw_markers_B_failure_subset": {
@@ -230,6 +311,17 @@
       "scaffold": "tau_toolcalling"
     }
   ],
+  "tau_candidate_step_default_diagnostic": {
+    "above_candidate_default_30": 3,
+    "at_or_below_candidate_default_30": 96,
+    "equal_candidate_default_30": 3,
+    "interpretation": "candidate source/configuration conflict only; runtime dependency pin and limit activation are unknown, so this is not a censoring determination",
+    "observed_action_count_max": 40,
+    "observed_action_count_median": 16,
+    "observed_action_count_min": 4,
+    "runs_with_observed_taken_actions": 99,
+    "runtime_pin": "unknown"
+  },
   "tool_version": "0.1.0",
   "training_approved_rows": 0
 }

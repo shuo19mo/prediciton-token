@@ -475,7 +475,8 @@
                 62
               ],
               "repository": "benediktstroebl/tau-bench",
-              "resolved_for_each_run": "unknown"
+              "resolved_for_each_run": "unknown",
+              "url": "https://github.com/benediktstroebl/tau-bench/tree/807e348b46a225242d5a045a8cecc690719e4b21"
             },
             {
               "commit": "bef42de85cdbfb5490e6f3bd19d8e053df977e08",
@@ -483,7 +484,8 @@
                 74
               ],
               "repository": "benediktstroebl/tau-bench",
-              "resolved_for_each_run": "unknown"
+              "resolved_for_each_run": "unknown",
+              "url": "https://github.com/benediktstroebl/tau-bench/tree/bef42de85cdbfb5490e6f3bd19d8e053df977e08"
             }
           ],
           "gap": "GitHub returned a commit-pinned readable source and git blob ID, but this run did not obtain raw bytes to verify SHA256.",
@@ -539,7 +541,8 @@
             "done"
           ],
           "repository": "benediktstroebl/tau-bench",
-          "role": "pinned_tau_dependency_runtime",
+          "resolved_for_each_run": "unknown",
+          "role": "candidate_tau_dependency_runtime",
           "sha256": null,
           "url": "https://github.com/benediktstroebl/tau-bench/blob/807e348b46a225242d5a045a8cecc690719e4b21/tau_bench/agents/tool_calling_agent.py",
           "verification_source_url": null
@@ -563,9 +566,64 @@
             "done"
           ],
           "repository": "benediktstroebl/tau-bench",
-          "role": "pinned_tau_dependency_runtime",
+          "resolved_for_each_run": "unknown",
+          "role": "candidate_tau_dependency_runtime",
           "sha256": null,
           "url": "https://github.com/benediktstroebl/tau-bench/blob/807e348b46a225242d5a045a8cecc690719e4b21/tau_bench/envs/base.py",
+          "verification_source_url": null
+        },
+        {
+          "bytes": null,
+          "commit": "bef42de85cdbfb5490e6f3bd19d8e053df977e08",
+          "content_verification": "immutable_git_blob_oid_recorded; raw-byte-sha256-unavailable",
+          "gap": "GitHub returned a commit-pinned readable source and git blob ID, but this run did not obtain raw bytes to verify SHA256.",
+          "git_blob_sha": "f270b9aaddebabd4cdc9a6b947f6a4507d6f958e",
+          "path": "tau_bench/agents/tool_calling_agent.py",
+          "relevant_line_ranges": [
+            [
+              27,
+              40
+            ],
+            [
+              73,
+              73
+            ]
+          ],
+          "relevant_symbols": [
+            "solve",
+            "max_num_steps",
+            "done"
+          ],
+          "repository": "benediktstroebl/tau-bench",
+          "resolved_for_each_run": "unknown",
+          "role": "candidate_tau_dependency_runtime",
+          "sha256": null,
+          "url": "https://github.com/benediktstroebl/tau-bench/blob/bef42de85cdbfb5490e6f3bd19d8e053df977e08/tau_bench/agents/tool_calling_agent.py",
+          "verification_source_url": null
+        },
+        {
+          "bytes": null,
+          "commit": "bef42de85cdbfb5490e6f3bd19d8e053df977e08",
+          "content_verification": "immutable_git_blob_oid_recorded; raw-byte-sha256-unavailable",
+          "gap": "GitHub returned a commit-pinned readable source and git blob ID, but this run did not obtain raw bytes to verify SHA256.",
+          "git_blob_sha": "632f060c82c960cbc62b5dfe8a666815468d7d0d",
+          "path": "tau_bench/envs/base.py",
+          "relevant_line_ranges": [
+            [
+              91,
+              120
+            ]
+          ],
+          "relevant_symbols": [
+            "step",
+            "actions.append",
+            "done"
+          ],
+          "repository": "benediktstroebl/tau-bench",
+          "resolved_for_each_run": "unknown",
+          "role": "candidate_tau_dependency_runtime",
+          "sha256": null,
+          "url": "https://github.com/benediktstroebl/tau-bench/blob/bef42de85cdbfb5490e6f3bd19d8e053df977e08/tau_bench/envs/base.py",
           "verification_source_url": null
         }
       ],

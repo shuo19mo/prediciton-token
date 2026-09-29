@@ -73,7 +73,7 @@ PINNED_EXTERNALS = {
         "path": "sweagent/agent/agents.py",
         "commits": {"02a2500e9883ecc022b3eeae29bc5b557788b3c7": "94f540cd146775dc1c092251422167b776d3d0aa", "85513dbe3ac92d135c304cd9ef5920e5a78f436f": "d872eb743ef9db31b31c253a8d26b31eb4349ac0"},
     },
-    "tau": {"repo": "benediktstroebl/tau-bench", "commit": "807e348b46a225242d5a045a8cecc690719e4b21", "paths": ["tau_bench/agents/tool_calling_agent.py", "tau_bench/envs/base.py"]},
+    "tau": {"repo": "benediktstroebl/tau-bench", "commit": "807e348b46a225242d5a045a8cecc690719e4b21", "candidate_commits": ["807e348b46a225242d5a045a8cecc690719e4b21", "bef42de85cdbfb5490e6f3bd19d8e053df977e08"], "paths": ["tau_bench/agents/tool_calling_agent.py", "tau_bench/envs/base.py"]},
 }
 GIT_BLOB_PINS = {
     ("23fc5665d6804fa72240f479e38f73fb53600002", "agents/sab_example_agent/science_agent.py"): "04abb4ea7729476f2221be2dc8ef10df9de60558",
@@ -97,6 +97,8 @@ EXTERNAL_GIT_BLOBS = {
     ("d872eb743ef9db31b31c253a8d26b31eb4349ac0", "config/benchmarks/250225_anthropic_filemap_simple_review.yaml"): "c86c2f615ffa84b619485010952a098c79218deb",
     ("807e348b46a225242d5a045a8cecc690719e4b21", "tau_bench/agents/tool_calling_agent.py"): "f270b9aaddebabd4cdc9a6b947f6a4507d6f958e",
     ("807e348b46a225242d5a045a8cecc690719e4b21", "tau_bench/envs/base.py"): "632f060c82c960cbc62b5dfe8a666815468d7d0d",
+    ("bef42de85cdbfb5490e6f3bd19d8e053df977e08", "tau_bench/agents/tool_calling_agent.py"): "f270b9aaddebabd4cdc9a6b947f6a4507d6f958e",
+    ("bef42de85cdbfb5490e6f3bd19d8e053df977e08", "tau_bench/envs/base.py"): "632f060c82c960cbc62b5dfe8a666815468d7d0d",
 }
 
 
@@ -223,6 +225,84 @@ def _archive_record_locator(archive: dict[str, Any], run: dict[str, Any]) -> tup
             preferred = matches[0]
         return preferred[0] + "/" + _pointer_escape(task), preferred[1], "exact_task_key"
     return None, None, "task_key_not_found"
+
+
+def _archive_task_evidence(archive: dict[str, Any], run: dict[str, Any]) -> dict[str, Any]:
+    """Production task/evaluator association path, with conservative labels."""
+    pointer, raw_record, join_status = _archive_record_locator(archive, run)
+    observations = []
+    if isinstance(raw_record, str) and raw_record.startswith("TIMEOUT"):
+        observations.append({"layer": "task_runtime_marker", "code": "explicit_timeout_prefix", "source_ref": "archive", "field_pointer": f"/{pointer}", "presence": "present", "interpretation_scope": "top_level_agent_output_marker", "excerpt_internal": raw_record[:240]})
+    elif isinstance(raw_record, str) and raw_record.startswith("ERROR:"):
+        observations.append({"layer": "task_runtime_marker", "code": "explicit_error_prefix", "source_ref": "archive", "field_pointer": f"/{pointer}", "presence": "present", "interpretation_scope": "top_level_agent_output_marker", "excerpt_internal": raw_record[:240]})
+    raw_eval = archive.get("raw_eval_results")
+    task_key = str(run.get("task_id")) if run.get("task_id") is not None else None
+    if task_key and isinstance(raw_eval, dict) and isinstance(raw_eval.get("eval_result"), dict):
+        eval_map = raw_eval["eval_result"]
+        if task_key in eval_map and isinstance(eval_map[task_key], dict):
+            eval_record = eval_map[task_key]
+            for key in ("log_info", "error", "exception"):
+                if key in eval_record:
+                    observations.append({"layer": "evaluation_diagnostic", "code": f"eval_{key}", "source_ref": "archive", "field_pointer": f"/raw_eval_results/eval_result/{_pointer_escape(task_key)}/{key}", "presence": _presence(eval_record, key), "interpretation_scope": "evaluation-only", "excerpt_internal": json.dumps(eval_record[key], ensure_ascii=False)[:400]})
+    return {
+        "raw_record_pointer": pointer,
+        "raw_record": raw_record,
+        "join_status": join_status,
+        "observations": observations,
+        "task_termination": {"status": "unknown"},
+        "identification_assessment": _identification_unknown("Synthetic or archived output markers and evaluator diagnostics do not establish identification conditions."),
+    }
+
+
+def _validate_run_label_relations(runs: list[dict[str, Any]], labels: list[dict[str, Any]]) -> tuple[dict[str, dict[str, Any]], dict[str, list[dict[str, Any]]]]:
+    seen = set()
+    by_episode = {}
+    run_keys = set()
+    for row in runs:
+        eid = row.get("episode_id")
+        if not eid or eid in seen:
+            raise AuditError("missing or duplicate episode_id in runs.jsonl")
+        seen.add(eid)
+        run_keys.add((row.get("archive_sha256"), str(row.get("task_id"))))
+        by_episode[eid] = row
+    if len(run_keys) != len(runs):
+        raise AuditError("duplicate archive/task identity in runs.jsonl")
+    grouped_labels: dict[str, list[dict[str, Any]]] = defaultdict(list)
+    for row in labels:
+        eid = row.get("episode_id")
+        if eid not in seen:
+            raise AuditError("candidate row refers to unknown episode_id")
+        run = by_episode[eid]
+        if row.get("benchmark") != run.get("benchmark") or row.get("config_id") != run.get("config_id"):
+            raise AuditError("candidate benchmark/config association disagrees with run")
+        grouped_labels[eid].append(row)
+    if set(grouped_labels) != seen:
+        raise AuditError("one or more episodes have no candidate rows")
+    for rows_for_episode in grouped_labels.values():
+        if Counter(row.get("protocol") for row in rows_for_episode) != Counter({"A": 1, "B": 1}):
+            raise AuditError("episode must have exactly one A and one B candidate row")
+    return by_episode, grouped_labels
+
+
+def _verify_file_receipt(path: Path, expected_bytes: int, expected_sha256: str, label: str) -> bool:
+    if not path.is_file() or path.stat().st_size != expected_bytes or sha256_file(path) != expected_sha256:
+        raise AuditError(f"{label} hash/size mismatch")
+    return True
+
+
+def _serialize_evidence_rows(rows: list[dict[str, Any]]) -> tuple[str, str]:
+    payload = "".join(json.dumps(row, ensure_ascii=False, sort_keys=True, separators=(",", ":")) + "\n" for row in rows)
+    return payload, hashlib.sha256(payload.encode("utf-8")).hexdigest()
+
+
+def _aggregate_observation_presence(rows: list[dict[str, Any]], b_subset: bool = False) -> dict[str, dict[str, dict[str, int]]]:
+    counts: dict[str, dict[str, Counter[str]]] = defaultdict(lambda: defaultdict(Counter))
+    for row in rows:
+        if b_subset and not row.get("in_B_failure_subset"):
+            continue
+        for observation in row.get("observations", []):
+            counts[observation.get("layer", "unknown")][observation.get("code", "unknown")][observation.get("presence", "unknown")] += 1
+    return {layer: {code: dict(sorted(presence_counts.items())) for code, presence_counts in sorted(codes.items())} for layer, codes in sorted(counts.items())}
 
 
 def _raw_call_evidence(archive: dict[str, Any], run: dict[str, Any]) -> list[dict[str, Any]]:
@@ -401,8 +481,8 @@ def _source_index(data_root: Path, runs: list[dict[str, Any]], index_path: Path,
                 item["content_verification"] = "local_receipt_sha256_verified" if item["sha256"] else item["content_verification"]
             if kind == "taubench" and path == "pyproject.toml":
                 item["dependency_pin_candidates"] = [
-                    {"repository": PINNED_EXTERNALS["tau"]["repo"], "commit": PINNED_EXTERNALS["tau"]["commit"], "lines": [40, 50, 62], "resolved_for_each_run": "unknown"},
-                    {"repository": PINNED_EXTERNALS["tau"]["repo"], "commit": "bef42de85cdbfb5490e6f3bd19d8e053df977e08", "lines": [74], "resolved_for_each_run": "unknown"},
+                    {"repository": PINNED_EXTERNALS["tau"]["repo"], "commit": PINNED_EXTERNALS["tau"]["commit"], "url": f"https://github.com/{PINNED_EXTERNALS['tau']['repo']}/tree/{PINNED_EXTERNALS['tau']['commit']}", "lines": [40, 50, 62], "resolved_for_each_run": "unknown"},
+                    {"repository": PINNED_EXTERNALS["tau"]["repo"], "commit": "bef42de85cdbfb5490e6f3bd19d8e053df977e08", "url": f"https://github.com/{PINNED_EXTERNALS['tau']['repo']}/tree/bef42de85cdbfb5490e6f3bd19d8e053df977e08", "lines": [74], "resolved_for_each_run": "unknown"},
                 ]
             files.append(item)
         if kind == "swe_agent":
@@ -418,12 +498,14 @@ def _source_index(data_root: Path, runs: list[dict[str, Any]], index_path: Path,
                 files.append(ext)
         if kind == "taubench":
             pin = PINNED_EXTERNALS["tau"]
-            for path, line_ranges, symbols in [
-                ("tau_bench/agents/tool_calling_agent.py", [[27, 40], [73, 73]], ["solve", "max_num_steps", "done"]),
-                ("tau_bench/envs/base.py", [[91, 120]], ["step", "actions.append", "done"]),
-            ]:
-                ext = file_record(pin["repo"], pin["commit"], path, "pinned_tau_dependency_runtime", line_ranges, symbols, "external")
-                files.append(ext)
+            for candidate_commit in pin["candidate_commits"]:
+                for path, line_ranges, symbols in [
+                    ("tau_bench/agents/tool_calling_agent.py", [[27, 40], [73, 73]], ["solve", "max_num_steps", "done"]),
+                    ("tau_bench/envs/base.py", [[91, 120]], ["step", "actions.append", "done"]),
+                ]:
+                    ext = file_record(pin["repo"], candidate_commit, path, "candidate_tau_dependency_runtime", line_ranges, symbols, "external")
+                    ext["resolved_for_each_run"] = "unknown"
+                    files.append(ext)
         entries.append({
             "source_version_key": [original_repo, commit], "hal_commit": commit, "rule_scope": kind,
             "archive_repository_url_original": original_repo,
@@ -465,32 +547,7 @@ def _validate_inputs(data_root: Path) -> tuple[dict[str, Any], list[dict[str, An
         raise AuditError("protocol summary runs_sha256 does not match the frozen runs file")
     if baseline.get("source_manifest_sha256") != hashes["manifest"]:
         raise AuditError("public baseline source manifest hash does not match fixed manifest")
-    seen = set()
-    by_episode = {}
-    run_keys = set()
-    for row in runs:
-        eid = row.get("episode_id")
-        if not eid or eid in seen:
-            raise AuditError("missing or duplicate episode_id in runs.jsonl")
-        seen.add(eid)
-        run_keys.add((row.get("archive_sha256"), str(row.get("task_id"))))
-        by_episode[eid] = row
-    if len(run_keys) != len(runs):
-        raise AuditError("duplicate archive/task identity in runs.jsonl")
-    grouped_labels: dict[str, list[dict[str, Any]]] = defaultdict(list)
-    for row in labels:
-        eid = row.get("episode_id")
-        if eid not in seen:
-            raise AuditError("candidate row refers to unknown episode_id")
-        run = by_episode[eid]
-        if row.get("benchmark") != run.get("benchmark") or row.get("config_id") != run.get("config_id"):
-            raise AuditError("candidate benchmark/config association disagrees with run")
-        grouped_labels[eid].append(row)
-    if set(grouped_labels) != seen:
-        raise AuditError("one or more episodes have no candidate rows")
-    for rows_for_episode in grouped_labels.values():
-        if Counter(row.get("protocol") for row in rows_for_episode) != Counter({"A": 1, "B": 1}):
-            raise AuditError("episode must have exactly one A and one B candidate row")
+    _, grouped_labels = _validate_run_label_relations(runs, labels)
     manifest_files = manifest.get("files")
     if not isinstance(manifest_files, list) or len(manifest_files) != 17:
         raise AuditError("manifest does not contain the expected frozen 17 archives")
@@ -498,8 +555,7 @@ def _validate_inputs(data_root: Path) -> tuple[dict[str, Any], list[dict[str, An
         path = data_root / item["local_path"]
         if not path.is_file():
             raise AuditError(f"missing archive: {item.get('filename', '<unknown>')}")
-        if path.stat().st_size != item.get("bytes") or sha256_file(path) != item.get("sha256"):
-            raise AuditError(f"archive hash/size mismatch: {item.get('filename', '<unknown>')}")
+        _verify_file_receipt(path, item.get("bytes"), item.get("sha256"), f"archive {item.get('filename', '<unknown>')}")
     return manifest, runs, labels, hashes, {"protocol": protocol, "baseline": baseline, "grouped_labels": grouped_labels, "paths": input_paths}
 
 
@@ -534,6 +590,7 @@ def build_index(data_root: Path, source_index_path: Path, private_output: Path, 
     sources, source_entries = _source_index(data_root, runs, source_index_path, archive_values)
     source_by_version = {(entry.get("archive_repository_url_original"), entry["hal_commit"]): entry for entry in source_entries}
     private_rows = []
+    tau_action_counts: list[int] = []
     review_examples: dict[str, list[dict[str, Any]]] = defaultdict(list)
     def add_review_example(kind: str, example: dict[str, Any], limit: int = 3) -> None:
         examples = review_examples[kind]
@@ -541,11 +598,17 @@ def build_index(data_root: Path, source_index_path: Path, private_output: Path, 
             examples.append(example)
     for run in sorted(runs, key=lambda row: row["episode_id"]):
         archive = archive_values[run["archive_sha256"]]
-        pointer, raw_record, join_status = _archive_record_locator(archive, run)
+        task_evidence = _archive_task_evidence(archive, run)
+        pointer, raw_record, join_status = task_evidence["raw_record_pointer"], task_evidence["raw_record"], task_evidence["join_status"]
         restrictions = _rules(run)
         raw_git = archive.get("git_info") if isinstance(archive.get("git_info"), dict) else {}
         source = source_by_version.get((raw_git.get("repository_url"), run.get("code_commit")))
-        observations = []
+        observations = list(task_evidence["observations"])
+        for task_observation in observations:
+            if task_observation.get("code") == "explicit_timeout_prefix":
+                add_review_example("explicit_timeout", {"episode_id": run["episode_id"], "archive_sha256": run["archive_sha256"], "raw_record_pointer": task_observation["field_pointer"]}, limit=5)
+            elif task_observation.get("code") == "eval_log_info":
+                add_review_example("evaluation_log", {"episode_id": run["episode_id"], "archive_sha256": run["archive_sha256"], "raw_record_pointer": task_observation["field_pointer"]})
         config = archive.get("config") if isinstance(archive.get("config"), dict) else {}
         raw_args = config.get("agent_args") if isinstance(config.get("agent_args"), dict) else {}
         configuration_conflict = False
@@ -560,18 +623,17 @@ def build_index(data_root: Path, source_index_path: Path, private_output: Path, 
                 configuration_conflict = configuration_conflict or not is_same
             else:
                 observations.append({"layer": "configuration_rule", "code": "configuration_field_not_found_in_archive", "source_ref": "archive", "field_pointer": f"/config/agent_args/{_pointer_escape(name)}", "presence": "absent", "interpretation_scope": "derived restriction not verified in raw config"})
-        if pointer:
-            layer = "task_runtime_marker"
-            if isinstance(raw_record, str) and raw_record.startswith("TIMEOUT"):
-                observations.append({"layer": layer, "code": "explicit_timeout_prefix", "source_ref": "archive", "field_pointer": f"/{pointer}", "presence": "present", "interpretation_scope": "top_level_agent_output_marker", "excerpt_internal": raw_record[:240]})
-                add_review_example("explicit_timeout", {"episode_id": run["episode_id"], "archive_sha256": run["archive_sha256"], "raw_record_pointer": f"/{pointer}"}, limit=5)
-            elif isinstance(raw_record, str) and raw_record.startswith("ERROR:"):
-                observations.append({"layer": layer, "code": "explicit_error_prefix", "source_ref": "archive", "field_pointer": f"/{pointer}", "presence": "present", "interpretation_scope": "top_level_agent_output_marker", "excerpt_internal": raw_record[:240]})
-            elif isinstance(raw_record, dict):
+        if pointer and isinstance(raw_record, dict):
                 # Only inspect named diagnostic/termination fields. Preserve values privately.
                 for key in ("log_info", "error", "exception", "finish_reason", "stop_reason", "timeout", "taken_actions", "reward"):
                     if key in raw_record:
                         val = raw_record[key]
+                        if run.get("benchmark") == "taubench_airline" and key == "taken_actions" and isinstance(val, list):
+                            count = len(val)
+                            tau_action_counts.append(count)
+                            observations.append({"layer": "task_runtime_marker", "code": "tau_candidate_step_default_comparison", "source_ref": "archive", "field_pointer": f"/{pointer}/taken_actions", "presence": "present", "interpretation_scope": "99 observed action-list counts; candidate dependency default max_num_steps=30; actual dependency pin and stop activation unknown", "private_summary": f"action_count={count}; candidate_default=30"})
+                            if count > 30:
+                                add_review_example("tau_candidate_default_exceeded", {"episode_id": run["episode_id"], "archive_sha256": run["archive_sha256"], "raw_record_pointer": f"/{pointer}/taken_actions", "observed_action_count": count, "candidate_default": 30, "runtime_pin": "unknown"}, limit=3)
                         if key == "log_info":
                             observations.append({"layer": "evaluation_diagnostic", "code": "eval_log_info", "source_ref": "archive", "field_pointer": f"/{pointer}/{key}", "presence": _presence(raw_record, key), "interpretation_scope": "evaluation-only", "excerpt_internal": json.dumps(val, ensure_ascii=False)[:400]})
                             if val not in (None, "", [], {}):
@@ -580,24 +642,12 @@ def build_index(data_root: Path, source_index_path: Path, private_output: Path, 
                             observations.append({"layer": "evaluation_diagnostic" if key in {"error", "exception"} else "task_runtime_marker", "code": f"raw_{key}_observed", "source_ref": "archive", "field_pointer": f"/{pointer}/{key}", "presence": _presence(raw_record, key), "interpretation_scope": "field-specific; does not by itself establish censoring", "private_summary": f"type={type(val).__name__}; length={len(val) if isinstance(val,(str,list,dict)) else None}"})
                 if run.get("benchmark") == "swebench_verified_mini":
                     observations.append({"layer": "evaluation_diagnostic", "code": "swe_result_membership", "source_ref": "archive", "field_pointer": f"/{pointer}", "presence": "present", "interpretation_scope": "final evaluator membership; not task stopping reason", "private_summary": ",".join(raw_record.get("membership_fields", []))})
-            elif run.get("benchmark") == "scicode":
-                observations.append({"layer": "evaluation_diagnostic", "code": "scicode_details_entry", "source_ref": "archive", "field_pointer": f"/{pointer}", "presence": _presence({"value": raw_record}, "value"), "interpretation_scope": "final evaluator details; evaluation timeout is not agent runtime cutoff", "private_summary": f"type={type(raw_record).__name__}; length={len(raw_record) if isinstance(raw_record,(str,list,dict)) else None}"})
+        elif pointer and run.get("benchmark") == "scicode":
+            observations.append({"layer": "evaluation_diagnostic", "code": "scicode_details_entry", "source_ref": "archive", "field_pointer": f"/{pointer}", "presence": _presence({"value": raw_record}, "value"), "interpretation_scope": "final evaluator details; evaluation timeout is not agent runtime cutoff", "private_summary": f"type={type(raw_record).__name__}; length={len(raw_record) if isinstance(raw_record,(str,list,dict)) else None}"})
         elif join_status != "exact_task_key":
             observations.append({"layer": "task_runtime_marker", "code": join_status, "source_ref": "archive", "field_pointer": "/raw_eval_results", "presence": "uninspected", "interpretation_scope": "raw task join not established"})
         # Evaluator diagnostics come from the evaluator channel, never from the
         # agent-output marker channel. Both joins use the exact task key.
-        raw_eval = archive.get("raw_eval_results")
-        if run.get("benchmark") in {"scienceagentbench", "scicode"} and isinstance(raw_eval, dict) and isinstance(raw_eval.get("eval_result"), dict):
-            eval_map = raw_eval["eval_result"]
-            task_key = str(run.get("task_id"))
-            if task_key in eval_map and isinstance(eval_map[task_key], dict):
-                eval_record = eval_map[task_key]
-                for key in ("log_info", "error", "exception"):
-                    if key in eval_record:
-                        value = eval_record[key]
-                        observations.append({"layer": "evaluation_diagnostic", "code": f"eval_{key}", "source_ref": "archive", "field_pointer": f"/raw_eval_results/eval_result/{_pointer_escape(task_key)}/{key}", "presence": _presence(eval_record, key), "interpretation_scope": "evaluation-only", "excerpt_internal": json.dumps(value, ensure_ascii=False)[:400]})
-                        if key == "log_info" and value not in (None, "", [], {}):
-                            add_review_example("evaluation_log", {"episode_id": run["episode_id"], "archive_sha256": run["archive_sha256"], "raw_record_pointer": f"/raw_eval_results/eval_result/{_pointer_escape(task_key)}/log_info"})
         observations.extend(_raw_call_evidence(archive, run))
         limit_conflict = None
         if isinstance(raw_record, dict) and isinstance(raw_record.get("taken_actions"), list):
@@ -612,7 +662,7 @@ def build_index(data_root: Path, source_index_path: Path, private_output: Path, 
         labels_for_episode = extra["grouped_labels"][run["episode_id"]]
         in_b = _b_failure_candidate(labels_for_episode, run.get("benchmark"))
         # B candidate source data does not contain any scientific censor decision.
-        assessment = _identification_unknown("No per-run evidence here establishes T>U, same continuation, first-success visibility, or conditional independent censoring.")
+        assessment = task_evidence["identification_assessment"]
         source_verified = bool(source and any(item.get("content_verification") == "local_receipt_sha256_verified" for item in source.get("source_files", [])))
         consistency = "conflicting" if configuration_conflict or (limit_conflict and limit_conflict["status"] == "conflicting") else "unknown"
         if source and not source_verified:
@@ -622,7 +672,7 @@ def build_index(data_root: Path, source_index_path: Path, private_output: Path, 
             "archive_sha256": run["archive_sha256"], "code_commit": run.get("code_commit"),
             "raw_record_pointer": f"/{pointer}" if pointer else None, "raw_join_status": join_status,
             "in_B_failure_subset": in_b, "configured_rules": restrictions, "observations": observations,
-            "task_termination": {"status": "unknown", "observed_category": "explicit_timeout_marker" if any(o.get("code") == "explicit_timeout_prefix" for o in observations) else ("explicit_error_marker" if any(o.get("code") == "explicit_error_prefix" for o in observations) else "unknown"), "evidence_refs": [o["field_pointer"] for o in observations if o["layer"] == "task_runtime_marker"], "reason": "A final marker, result/diagnostic or call finish reason does not identify the actual task stopping branch."},
+            "task_termination": {**task_evidence["task_termination"], "observed_category": "explicit_timeout_marker" if any(o.get("code") == "explicit_timeout_prefix" for o in observations) else ("explicit_error_marker" if any(o.get("code") == "explicit_error_prefix" for o in observations) else "unknown"), "evidence_refs": [o["field_pointer"] for o in observations if o["layer"] == "task_runtime_marker"], "reason": "A final marker, result/diagnostic or call finish reason does not identify the actual task stopping branch."},
             "source_runtime_consistency": {"status": consistency, "reason": "A source receipt can establish committed source bytes, but archive metadata alone does not prove the executing runtime matched those bytes."},
             "identification_assessment": assessment,
             "limitations": ["No whole-run token cap verified.", "Configuration is not evidence of rule activation.", "Final evaluation outcome is not a task termination event."],
@@ -645,9 +695,8 @@ def build_index(data_root: Path, source_index_path: Path, private_output: Path, 
     b_count = sum(row["in_B_failure_subset"] for row in private_rows)
     private_output.mkdir(parents=True, exist_ok=True)
     internal_path = private_output / "run_evidence.internal.jsonl"
-    internal_payload = "".join(json.dumps(row, ensure_ascii=False, sort_keys=True, separators=(",", ":")) + "\n" for row in private_rows)
+    internal_payload, internal_hash = _serialize_evidence_rows(private_rows)
     internal_path.write_text(internal_payload, encoding="utf-8")
-    internal_hash = hashlib.sha256(internal_payload.encode()).hexdigest()
     # Public aggregate is explicit field construction; never serialize internal rows.
     dimensions = defaultdict(Counter)
     totals = Counter()
@@ -694,10 +743,23 @@ def build_index(data_root: Path, source_index_path: Path, private_output: Path, 
             "coverage": {"raw_task_join_status": dict(sorted(coverage.items())), "source_sha256_verified_files": sum(item.get("content_verification") == "local_receipt_sha256_verified" for entry in source_entries for item in entry.get("source_files", [])), "source_git_blob_pinned_files": sum(bool(item.get("git_blob_sha")) for entry in source_entries for item in entry.get("source_files", [])), "source_files_total": sum(len(entry.get("source_files", [])) for entry in source_entries), "source_versions_expected": len(source_entries), "unregistered_source_version_count": len(sources["unregistered_source_versions"])},
         "evidence_coverage_all_runs": {layer: dict(sorted(counts.items())) for layer,counts in sorted(evidence_coverage.items())},
         "evidence_coverage_B_failure_subset": {layer: dict(sorted(counts.items())) for layer,counts in sorted(b_evidence_coverage.items())},
+        "evidence_presence_all_runs": _aggregate_observation_presence(private_rows),
+        "evidence_presence_B_failure_subset": _aggregate_observation_presence(private_rows, b_subset=True),
         "configured_rule_presence_all_runs": {name: dict(sorted(counts.items())) for name,counts in sorted(rule_coverage.items())},
         "configured_rule_presence_B_failure_subset": {name: dict(sorted(counts.items())) for name,counts in sorted(b_rule_coverage.items())},
         "explicit_raw_markers_all_runs": dict(sorted(all_raw_markers.items())),
         "explicit_raw_markers_B_failure_subset": dict(sorted(b_raw_markers.items())),
+        "tau_candidate_step_default_diagnostic": {
+            "runs_with_observed_taken_actions": len(tau_action_counts),
+            "at_or_below_candidate_default_30": sum(count <= 30 for count in tau_action_counts),
+            "equal_candidate_default_30": sum(count == 30 for count in tau_action_counts),
+            "above_candidate_default_30": sum(count > 30 for count in tau_action_counts),
+            "observed_action_count_min": min(tau_action_counts) if tau_action_counts else None,
+            "observed_action_count_median": sorted(tau_action_counts)[len(tau_action_counts) // 2] if len(tau_action_counts) % 2 else (sum(sorted(tau_action_counts)[len(tau_action_counts) // 2 - 1:len(tau_action_counts) // 2 + 1]) / 2 if tau_action_counts else None),
+            "observed_action_count_max": max(tau_action_counts) if tau_action_counts else None,
+            "interpretation": "candidate source/configuration conflict only; runtime dependency pin and limit activation are unknown, so this is not a censoring determination",
+            "runtime_pin": "unknown",
+        },
         "strata": [{"benchmark": b, "scaffold": s, "code_commit": c, "runs": counts["runs"], "B_failure_subset": b_dimensions[(b,s,c)]["runs"], "B_failure_raw_joined": b_dimensions[(b,s,c)]["raw_joined"], "B_failure_task_termination_unknown": b_dimensions[(b,s,c)]["task_termination_unknown"]} for (b,s,c),counts in sorted(dimensions.items())],
         "identification_coverage": {name: dict(sorted(counts.items())) for name,counts in sorted(identification.items())},
         "known_gaps": ["Raw runtime marker association is exact-keyed but does not establish which agent branch ended a task.", "Historical source bytes are only marked verified when a local pinned receipt matches; missing receipts remain unknown.", "Per-call finish reasons, dollar/step limits, evaluation diagnostics, and task termination are distinct evidence layers."],

@@ -72,8 +72,8 @@
 ## M0 当前可执行工作
 
 1. **已验收：事实与证据资格复核**（[#8](https://github.com/shuo19mo/prediciton-token/issues/8)）：校验17归档及9份冻结派生文件；完成1197运行/312任务身份的事实复算。只通过工程与事实范围，不代表科学识别。
-2. **当前唯一执行：失败停止与删失依据核查**（[#9](https://github.com/shuo19mo/prediciton-token/issues/9)）：区分规则、逐次触发、评估诊断及是否能继续。逐运行索引留本地，公开聚合结论与来源。
-3. **阶段决策**：在 #8/#9 验收后，按证据比较定向最近工作反证、目标识别与现有 HAL 覆盖；M0 是否通过及下一项选择由 [#11](https://github.com/shuo19mo/prediciton-token/issues/11) 按阶段标准验收。阶段顺序不预先锁定最终方法。
+2. **已验收：失败停止与删失依据核查**（[#9](https://github.com/shuo19mo/prediciton-token/issues/9)）：区分规则、逐次触发、评估诊断及是否能继续；四项删失判断仍为 unknown，训练准入为0。
+3. **M0交接与M1导航**：[#11](https://github.com/shuo19mo/prediciton-token/issues/11) 已通过可靠交接门槛，不代表目标可识别、方法有效或贡献成立。当前后续研究任务为 [#12](https://github.com/shuo19mo/prediciton-token/issues/12)，核查最近工作、目标/输入时点差异与可证伪研究缺口；研究目标为运行前预测成功完成所需token，贡献主张与estimand仍待证据决定。阶段顺序不预先锁定最终方法。
 
 M0通过表示有可靠接手诊断与下一研究问题，不表示目标可识别、方法有效或贡献成立。调查可以得到否定结论而完成；支持不足的科学门槛不得因此标为通过。
 
@@ -97,4 +97,4 @@ M0通过表示有可靠接手诊断与下一研究问题，不表示目标可识
 - [M5 milestone](https://github.com/shuo19mo/prediciton-token/milestone/6)：完整证据与稳健性；进入时细化。
 - [M6 milestone](https://github.com/shuo19mo/prediciton-token/milestone/7)：证据成熟后的写作；进入时细化。
 
-M0 issue 顺序索引：[事实复核 #8](https://github.com/shuo19mo/prediciton-token/issues/8)、[停止证据 #9](https://github.com/shuo19mo/prediciton-token/issues/9)、[阶段决策 #11](https://github.com/shuo19mo/prediciton-token/issues/11)。#1 与 #10 是撤销的占位 issue，保留在历史中，不代表当前待办。实时状态只以 GitHub Issues 与 Milestones 为准。
+M0/M1 issue 索引：[事实复核 #8](https://github.com/shuo19mo/prediciton-token/issues/8)、[停止证据 #9](https://github.com/shuo19mo/prediciton-token/issues/9)、[阶段决策与交接 #11](https://github.com/shuo19mo/prediciton-token/issues/11)、[最近工作对照 #12](https://github.com/shuo19mo/prediciton-token/issues/12)。#1 与 #10 是撤销的占位 issue，保留在历史中，不代表当前待办。实时状态只以 GitHub Issues 与 Milestones 为准。

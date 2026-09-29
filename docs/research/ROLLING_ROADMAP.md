@@ -1,6 +1,6 @@
 # 滚动研究路线与阶段验收
 
-设计版本：2026-09-28-r3。目标维持 NeurIPS／ICML／ICLR 正式主会，不保证录用，不自动改为 workshop。**当前交付是路线、milestones、可执行 issues；论文写作暂停。**
+设计版本：2026-09-28-r4。目标维持 NeurIPS／ICML／ICLR 正式主会，不保证录用，不自动改为 workshop。**当前交付是路线、milestones、可执行 issues；论文写作暂停。**
 
 唯一进度入口：[GitHub Issues](https://github.com/shuo19mo/prediciton-token/issues) 与 [Milestones](https://github.com/shuo19mo/prediciton-token/milestones)。本文是有版本的设计说明，不记录第二套实时状态。旧R00–R07保留为工作分解与验收接口，映射到研究阶段；旧P自采路线不恢复。
 
@@ -73,7 +73,7 @@
 
 1. **已验收：事实与证据资格复核**（[#8](https://github.com/shuo19mo/prediciton-token/issues/8)）：校验17归档及9份冻结派生文件；完成1197运行/312任务身份的事实复算。只通过工程与事实范围，不代表科学识别。
 2. **当前唯一执行：失败停止与删失依据核查**（[#9](https://github.com/shuo19mo/prediciton-token/issues/9)）：区分规则、逐次触发、评估诊断及是否能继续。逐运行索引留本地，公开聚合结论与来源。
-3. **之后才决定下一项**：在本版本的重排时点，#9是当前唯一执行issue。它验收后复核发现、未知和候选方向，再创建一个有证据依据的issue。此前撤销的阶段占位issue不是未完成任务清单；未来只保留milestone概要。之后状态以GitHub为准。
+3. **阶段决策**：在 #8/#9 验收后，按证据比较定向最近工作反证、目标识别与现有 HAL 覆盖；M0 是否通过及下一项选择由 [#11](https://github.com/shuo19mo/prediciton-token/issues/11) 按阶段标准验收。阶段顺序不预先锁定最终方法。
 
 M0通过表示有可靠接手诊断与下一研究问题，不表示目标可识别、方法有效或贡献成立。调查可以得到否定结论而完成；支持不足的科学门槛不得因此标为通过。
 
@@ -97,4 +97,4 @@ M0通过表示有可靠接手诊断与下一研究问题，不表示目标可识
 - [M5 milestone](https://github.com/shuo19mo/prediciton-token/milestone/6)：完整证据与稳健性；进入时细化。
 - [M6 milestone](https://github.com/shuo19mo/prediciton-token/milestone/7)：证据成熟后的写作；进入时细化。
 
-当前唯一开放的执行issue：[停止机制核查 #9](https://github.com/shuo19mo/prediciton-token/issues/9)。事实复核[#8](https://github.com/shuo19mo/prediciton-token/issues/8)只表示工程与事实审计完成；M0仍开放。撤销的提前创建issue保留在GitHub历史，但不再构成未来待办。
+M0 issue 顺序索引：[事实复核 #8](https://github.com/shuo19mo/prediciton-token/issues/8)、[停止证据 #9](https://github.com/shuo19mo/prediciton-token/issues/9)、[阶段决策 #11](https://github.com/shuo19mo/prediciton-token/issues/11)。#1 与 #10 是撤销的占位 issue，保留在历史中，不代表当前待办。实时状态只以 GitHub Issues 与 Milestones 为准。

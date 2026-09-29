@@ -73,7 +73,7 @@
 
 1. **已验收：事实与证据资格复核**（[#8](https://github.com/shuo19mo/prediciton-token/issues/8)）：校验17归档及9份冻结派生文件；完成1197运行/312任务身份的事实复算。只通过工程与事实范围，不代表科学识别。
 2. **已验收：失败停止与删失依据核查**（[#9](https://github.com/shuo19mo/prediciton-token/issues/9)）：区分规则、逐次触发、评估诊断及是否能继续；四项删失判断仍为 unknown，训练准入为0。
-3. **M0交接与M1导航**：[#11](https://github.com/shuo19mo/prediciton-token/issues/11) 已通过可靠交接门槛，不代表目标可识别、方法有效或贡献成立；[#12](https://github.com/shuo19mo/prediciton-token/issues/12) 的最近工作比较已验收，否定宽泛的运行前任务级 token 预测空白。当前 M1 子任务为 [#13](https://github.com/shuo19mo/prediciton-token/issues/13)，定义成功 token 目标候选及其相对近作的差异，报告见 [M1_SUCCESS_TARGET_CANDIDATES_2026-09.md](M1_SUCCESS_TARGET_CANDIDATES_2026-09.md)。研究目标仍为运行前预测成功完成所需 token；候选 estimand、贡献主张与后续方法由证据决定。
+3. **M0交接与M1导航**：[#11](https://github.com/shuo19mo/prediciton-token/issues/11) 已通过可靠交接门槛，不代表目标可识别、方法有效或贡献成立；[#12](https://github.com/shuo19mo/prediciton-token/issues/12) 的最近工作比较已验收，否定宽泛的运行前任务级 token 预测空白。[#13](https://github.com/shuo19mo/prediciton-token/issues/13) 的目标候选报告见 [M1_SUCCESS_TARGET_CANDIDATES_2026-09.md](M1_SUCCESS_TARGET_CANDIDATES_2026-09.md)，当前结论为 `NO_SUPPORTED_CANDIDATE`；这不表示 M1 整体通过，M1 仍开放。研究目标仍为运行前预测成功完成所需 token；候选 estimand、贡献主张与后续方法由证据决定。
 
 M0通过表示有可靠接手诊断与下一研究问题，不表示目标可识别、方法有效或贡献成立。调查可以得到否定结论而完成；支持不足的科学门槛不得因此标为通过。
 

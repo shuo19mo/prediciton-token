@@ -10,11 +10,15 @@ Milestone描述包含问题、进入条件、交付、证据门槛和重构条�
 
 初始配置 `configs/github_research_bootstrap.json` 是经过审阅的GitHub创建意图与显式操作记录，不是活动任务镜像。`tools/manage_research_tracker.py`复用已存在的milestone和issue、保留后续人工修改，并用操作标记防止重复评论。初始化通过后取消push触发，只保留手动运行；后续优先使用正常GitHub界面/CLI/连接器更新状态。必要的管理操作仍须有明确授权及范围。
 
+初始化已完成：7个milestones与10个issues已回读核对。#8已记录事实调查验收，#9继续机制调查，M0未关闭。这里描述本次初始化事件，后续状态不在本文件同步。初始化程序现仅可手动触发，没有定时或push运行。
+
 初始化采用仓库自有GitHub Actions的临时GITHUB_TOKEN，仅给contents:read和issues:write；无第三方action，无凭据导出，无本地数据访问，无训练或实验。此方式符合[GitHub官方的issue创建示例](https://docs.github.com/en/actions/tutorials/authenticate-with-github_token)。不得授予内容写入、管理权限或创建额外凭据来扩大范围。
 
 研究文档、解析/核查代码、实验候选规格、来源manifest及安全聚合报告可纳入Git；有意义的提交关联issue，如 `Refs #8`。原始数据、调用正文、参考答案、逐题真实结果/用量、测试标签、训练/审阅包、凭据和第三方缓存不提交。来源URL、revision和SHA256追踪本地只读材料，仓库不是数据发布。
 
 历史笔记中包含真实逐运行样例的页面和派生家族映射也保留本地。旧资料内指向这些页面、data/、docs/evidence/和paper/正文的链接是本地证据入口，不表示这些材料已在GitHub发布；完整本地检查需要受控工作区，干净clone只含安全子集。
+
+Git边界：公开main只保存本轮已审查的管理产物；本地 `codex/local-research-history` 保存既有研究实现、文档及R映射的版本，不推送该分支。原始记录、逐题标签和被忽略的含真值样例不进入任一提交。今后不能用 `push --all` 将本地历史一并公开；公开更多历史文件需逐份审查并在已有授权范围内处理。
 
 正式实验前需固定数据/代码/规格版本、同题分组、输入白名单、选优规则和测试查看记录。旧SAB开发暴露不能抹去。研究负责人可保有评价真值，但训练进程不得访问；目录名字不是隔离证据。变更正式测试后必须登记探索版本和理由。
 

@@ -1,9 +1,6 @@
 name: Apply reviewed research tracker setup
 
 on:
-  push:
-    branches: [main]
-    paths: [configs/github_research_bootstrap.json]
   workflow_dispatch:
 
 permissions:

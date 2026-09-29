@@ -1,17 +1,17 @@
 # 滚动研究路线与阶段验收
 
-设计版本：2026-09-28-r2。目标维持 NeurIPS／ICML／ICLR 正式主会，不保证录用，不自动改为 workshop。**当前交付是路线、milestones、可执行 issues；论文写作暂停。**
+设计版本：2026-09-28-r3。目标维持 NeurIPS／ICML／ICLR 正式主会，不保证录用，不自动改为 workshop。**当前交付是路线、milestones、可执行 issues；论文写作暂停。**
 
 唯一进度入口：[GitHub Issues](https://github.com/shuo19mo/prediciton-token/issues) 与 [Milestones](https://github.com/shuo19mo/prediciton-token/milestones)。本文是有版本的设计说明，不记录第二套实时状态。旧R00–R07保留为工作分解与验收接口，映射到研究阶段；旧P自采路线不恢复。
 
-每阶段循环：研究与核查 → 未知问题 → 比较方案 → 当前具体计划 → 执行issues → 验收证据 → 推进或重构。只有当前M0细化子任务。M1仅保留下一阶段概要，M2–M6是可调整的验收边界，不是固定实验清单。前序问题影响方向时，先修改后续阶段，再拆任务。
+每阶段循环：先确认milestone → 建立一个当前issue → 做完并验收 → 评估证据和新未知 → 再决定是否创建下一issue。任何时刻只执行一个issue。未来milestones只保留研究问题和验收框架；进入该阶段之后才细化任务，方法和实验随证据调整。
 
 ## M0 · 项目现状与证据资格审计
 
 - 科学问题：现有成果究竟支持哪些事实，哪些科学判断仍没有证据？
 - 进入条件：读取现有 R00–R07、原始来源清单、工程验收和历史研究材料。
 - 交付物：证据分层诊断、可复算事实摘要、失败停止机制缺口、R 流程映射和阶段决策记录。
-- 证据通过标准：每项主要结论可追到版本与来源；工程、假设和真实效果不混淆；下一阶段有明确待证问题；未解决缺口有 issue 和责任。
+- 证据通过标准：每项主要结论可追到版本与来源；工程、假设和真实效果不混淆；停止机制调查给出有证据的结论及下一问题。
 - 重构/放弃当前方案：事实/计量无法复算、标签目标混淆或关键输入含未来信息时，回到 R03–R05 修复，不能以工程完成进入训练。
 - 既有R接口：R00–R07 的历史验收复核。
 
@@ -71,9 +71,9 @@
 
 ## M0 当前可执行工作
 
-1. **事实与证据资格复核**：校验17归档和冻结派生文件，重算运行/任务/成功候选支持，复核旧验收的边界；交付[诊断](PROJECT_DIAGNOSIS.md)与聚合可复算报告。无需重做无变化管线。
-2. **失败停止与删失依据核查**：从现有字段和历史源码起步，区分配置规则、逐次触发、评估诊断和继续过程。逐运行证据索引仅保留本地；公开结论只给聚合与来源。
-3. **阶段决策**：前两项验收后比较定向最近工作反证、目标识别和HAL扩展的预期信息价值；明确推进或重构，只细化下一阶段。
+1. **已验收：事实与证据资格复核**（[#8](https://github.com/shuo19mo/prediciton-token/issues/8)）：校验17归档及9份冻结派生文件；完成1197运行/312任务身份的事实复算。只通过工程与事实范围，不代表科学识别。
+2. **当前唯一执行：失败停止与删失依据核查**（[#9](https://github.com/shuo19mo/prediciton-token/issues/9)）：区分规则、逐次触发、评估诊断及是否能继续。逐运行索引留本地，公开聚合结论与来源。
+3. **之后才决定下一项**：在本版本的重排时点，#9是当前唯一执行issue。它验收后复核发现、未知和候选方向，再创建一个有证据依据的issue。此前撤销的阶段占位issue不是未完成任务清单；未来只保留milestone概要。之后状态以GitHub为准。
 
 M0通过表示有可靠接手诊断与下一研究问题，不表示目标可识别、方法有效或贡献成立。调查可以得到否定结论而完成；支持不足的科学门槛不得因此标为通过。
 
@@ -83,18 +83,18 @@ M0通过表示有可靠接手诊断与下一研究问题，不表示目标可识
 
 目前比较三种行动：可观察成功终点预测（可直接评价，但选择偏差与科学重要性待查）；有机制支持的失败子集（当前证据不足）；机制未知下的敏感性分析（能描述假设依赖，不能恢复不存在的潜在真值）。暂不决定其中哪一种能形成贡献，更不预设survival有效。
 
-研究负责人处理文献、数据、定义、实验设计、独立评价和证据成熟后的写作；师兄处理模型实现、训练和调参。等待训练时继续不依赖预测的开放issue，不代签统计决定，不自动联系他人。
+研究负责人处理文献、数据、定义、实验设计、独立评价和证据成熟后的写作；师兄处理模型实现、训练和调参。若当前issue等待训练结果，保持该issue开放；在它验收前不启动下一issue。可在当前issue范围内完成不依赖训练的核查，不代签统计决定，不自动联系他人。
 
 写作需M5证据验收和贡献审查通过后进入M6；旧初稿不约束研究方向。稿件完成、内部投稿检查通过、实际投稿和录用分别记录，不能互相替代。
 
-## GitHub对象索引（仅链接，不镜像状态）
+## GitHub对象索引
 
-- [M0 milestone](https://github.com/shuo19mo/prediciton-token/milestone/1) · [主issue #1](https://github.com/shuo19mo/prediciton-token/issues/1)
-- [M1 milestone](https://github.com/shuo19mo/prediciton-token/milestone/2) · [主issue #2](https://github.com/shuo19mo/prediciton-token/issues/2)
-- [M2 milestone](https://github.com/shuo19mo/prediciton-token/milestone/3) · [主issue #3](https://github.com/shuo19mo/prediciton-token/issues/3)
-- [M3 milestone](https://github.com/shuo19mo/prediciton-token/milestone/4) · [主issue #4](https://github.com/shuo19mo/prediciton-token/issues/4)
-- [M4 milestone](https://github.com/shuo19mo/prediciton-token/milestone/5) · [主issue #5](https://github.com/shuo19mo/prediciton-token/issues/5)
-- [M5 milestone](https://github.com/shuo19mo/prediciton-token/milestone/6) · [主issue #6](https://github.com/shuo19mo/prediciton-token/issues/6)
-- [M6 milestone](https://github.com/shuo19mo/prediciton-token/milestone/7) · [主issue #7](https://github.com/shuo19mo/prediciton-token/issues/7)
+- [M0 milestone](https://github.com/shuo19mo/prediciton-token/milestone/1)：当前阶段。
+- [M1 milestone](https://github.com/shuo19mo/prediciton-token/milestone/2)：最近工作与缺口；进入时细化。
+- [M2 milestone](https://github.com/shuo19mo/prediciton-token/milestone/3)：数据目标与可识别性；进入时细化。
+- [M3 milestone](https://github.com/shuo19mo/prediciton-token/milestone/4)：强基线与最小反证；进入时细化。
+- [M4 milestone](https://github.com/shuo19mo/prediciton-token/milestone/5)：训练交接与独立结果；进入时细化。
+- [M5 milestone](https://github.com/shuo19mo/prediciton-token/milestone/6)：完整证据与稳健性；进入时细化。
+- [M6 milestone](https://github.com/shuo19mo/prediciton-token/milestone/7)：证据成熟后的写作；进入时细化。
 
-当前M0子issues：[事实复核 #8](https://github.com/shuo19mo/prediciton-token/issues/8)、[停止机制 #9](https://github.com/shuo19mo/prediciton-token/issues/9)、[阶段验收 #10](https://github.com/shuo19mo/prediciton-token/issues/10)。
+当前唯一开放的执行issue：[停止机制核查 #9](https://github.com/shuo19mo/prediciton-token/issues/9)。事实复核[#8](https://github.com/shuo19mo/prediciton-token/issues/8)只表示工程与事实审计完成；M0仍开放。撤销的提前创建issue保留在GitHub历史，但不再构成未来待办。

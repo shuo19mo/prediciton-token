@@ -7,7 +7,7 @@
 ## 研究入口
 
 - [GitHub Milestones](https://github.com/shuo19mo/prediciton-token/milestones)：整体阶段与证据验收标准。
-- [GitHub Issues](https://github.com/shuo19mo/prediciton-token/issues)：唯一动态进度、讨论与验收入口。
+- [GitHub Issues](https://github.com/shuo19mo/prediciton-token/issues)：唯一动态进度、讨论与验收入口；一次只执行一个issue，验收后再创建下一项。
 - [滚动研究路线](docs/research/ROLLING_ROADMAP.md)：7个阶段，只细化当前M0。
 - [项目现状诊断](docs/research/PROJECT_DIAGNOSIS.md)：事实、工程、假设与科学未知。
 - [停止证据初核](docs/research/STOPPING_EVIDENCE_AUDIT.md)：正在继续的研究核查。

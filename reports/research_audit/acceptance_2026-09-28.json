@@ -1,0 +1,41 @@
+{
+  "checked_utc": "2026-09-29T00:52:00.702873+00:00",
+  "issue": "https://github.com/shuo19mo/prediciton-token/issues/8",
+  "scope": "fact consistency and engineering only; no scientific identification or training admission",
+  "source_archives_verified": 17,
+  "derived_files_verified": 9,
+  "historical_source_files_verified": 5,
+  "runs": 1197,
+  "task_identities": 312,
+  "unit_tests": 73,
+  "unit_test_log_sha256": "917fd1e2e171419f4bf5d8037a7587f02562fb11dcd676463d2bd3f24ea92a4d",
+  "fact_validation": {
+    "status": "pass",
+    "errors": [],
+    "runs": 1197,
+    "spans": 12329,
+    "duplicate_spans_excluded": 2731,
+    "outer_partitions_checked": 25,
+    "configuration_partitions_checked": 130,
+    "evidence_scope": "engineering_and_observed_facts_only_not_survival_identification",
+    "runs_sha256": "0117bf11dce813db1c800a1d539d22fabdee073f2f02abf18eb4f865455cbc37"
+  },
+  "documentation_check": {
+    "passed": true,
+    "markdown_files_checked": 55,
+    "local_links_checked": 157
+  },
+  "audit_script_sha256": "6e1cc956e865412f23bb5ba836f32a3b515c4c83a4d6bc3fd61f6af889f56d5a",
+  "new_trajectories": 0,
+  "benchmark_or_grader_executions": 0,
+  "training_executions": 0,
+  "training_admission": false,
+  "contribution_established": false,
+  "milestone_passed": false,
+  "commands": [
+    "python3 tools/audit_research_evidence.py",
+    "python3 tools/validate_existing_runs.py",
+    "python3 tools/check_project.py",
+    "python3 -m unittest discover -s checks -v"
+  ]
+}

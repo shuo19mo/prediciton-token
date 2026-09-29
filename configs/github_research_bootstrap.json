@@ -245,6 +245,40 @@
       "patch": {
         "body": "<!-- research-tracker:gate -->\n## 研究问题与重要性\nM0是否已足以指导后续研究，而没有把尚未解决的科学问题标为完成？\n\n## 已知证据与待验证假设\n已知：现有贡献审查未通过，工程实现和旧实验规格可复用，但不足以决定方法。\n待证：完成事实和机制审计后能确定一个优先可证伪问题；可能需要重构而非直接训练。\n来源：configs/hal_research_manifest.json；checks/HAL_RESEARCH_CHECK.json；docs/handoff/label_decisions.md；docs/research/papers/HAL.md。本轮聚合诊断和核查代码以Git提交绑定；历史来源及逐行数据保持本地。\n\n## 具体工作\n1. 审阅事实复核和停止机制issue的结论/限制。\n2. 比较继续目标识别、先查最近工作、扩大HAL覆盖三种行动及预期信息价值。\n3. 记录推进或重构决定，只细化下一milestone；更新相应主issue。\n4. 只有M0证据门槛通过才关闭milestone，关闭子issue数量不是通过依据。\n\n## 依赖与负责人\n主issue：{{issue:M0}}；等待 {{issue:audit}} 与 {{issue:stops}} 的调查验收。\n负责人：Codex；训练和调参由师兄负责，本issue不执行训练。\n\n## 交付物\n主issue中的阶段验收评论；有版本的路线修订与下一阶段当前子issues。\n\n## 可检查验收标准\n每个未知有责任/依赖；下一行动有区分候选判断的证据价值；研究目标保持正式主会，论文仍暂停；写明哪些科学问题仍未解决。\n\n## 可能推翻当前判断的结果\n停止审计或文献反证使当前目标不可验证时，应重构目标的操作定义/候选贡献，不直接批准survival训练。\n\n## 状态、结论及证据\n待执行；尚无验收结论。状态及过程记录仅在本issue维护；仓库保存证据和设计，不维护另一套活动任务表。\n"
       }
+    },
+    {
+      "id": "accept-audit-2026-09-28",
+      "issue": "audit",
+      "body": "调查验收完成（仅事实与工程范围）。\n\n**已解决**：17份原始归档与9份冻结派生文件hash一致；1197运行/312任务身份；161合格成功终点来自81任务身份；B额外603失败仅为假设候选。5份历史源码hash复核通过。已有事实/角色/分组检查和73项离线测试通过，文档入口冲突已在本地修正。\n\n**证据**：[验收记录](https://github.com/shuo19mo/prediciton-token/blob/{{commit}}/reports/research_audit/acceptance_2026-09-28.json)、[复算报告](https://github.com/shuo19mo/prediciton-token/blob/{{commit}}/reports/research_audit/current_evidence.json)、[项目诊断](https://github.com/shuo19mo/prediciton-token/blob/{{commit}}/docs/research/PROJECT_DIAGNOSIS.md)、[提交](https://github.com/shuo19mo/prediciton-token/commit/{{commit}})。完整本地检查需要受控历史工作区；公开仓库不含逐题数据或真值。\n\n**仍未知**：失败的实际停止机制、T>U/继续规则/独立性、CORE论文同源、强基线与预测增量。没有训练、真实预测、科学贡献或M0阶段通过。后续机制研究在 {{issue:stops}}；阶段验收 {{issue:gate}} 仍开放。本issue关闭仅表示证据资格复核完成。",
+      "patch": {
+        "state": "closed",
+        "state_reason": "completed",
+        "labels": [
+          "data",
+          "review"
+        ],
+        "body": "<!-- research-tracker:audit -->\n## 研究问题与重要性\n哪些历史完成标记可以复用，哪些推论超出了证据？避免以文档、fixture测试或初稿替代科学有效性。\n\n## 已知证据与待验证假设\n已知：17归档、1197运行和候选A/B汇总，历史工程验收通过；真实模型预测尚无。\n待证：汇总、源hash、候选标签和分组输出仍一致；历史完成仅为工程范围。\n来源：configs/hal_research_manifest.json；checks/HAL_RESEARCH_CHECK.json；docs/handoff/label_decisions.md；docs/research/papers/HAL.md。本轮聚合诊断和核查代码以Git提交绑定；历史来源及逐行数据保持本地。\n\n## 具体工作\n1. 核对冻结manifest与文件hash，不重新下载或解析无变化数据。\n2. 从现有事实/候选表复算分母、成功支持和停止字段覆盖。\n3. 运行已有离线事实及工程检查，区分检查范围。\n4. 写证据分层诊断，撤销冲突的活动入口。\n\n## 依赖与负责人\n主issue：{{issue:M0}}；无阻塞，复用本地数据。\n负责人：Codex；训练和调参由师兄负责，本issue不执行训练。\n\n## 交付物\ndocs/research/PROJECT_DIAGNOSIS.md；reports/research_audit/current_evidence.json；复算脚本与验收记录。\n\n## 可检查验收标准\n所有关键数字有源hash、分母和统计口径；已有字段/分组检查通过或有逐项失败清单；无新增轨迹、训练、判分；Git提交关联issue。\n\n## 可能推翻当前判断的结果\nhash漂移、错误标签关联、重复记录、未来信息或与原报告不符时，不能保留对应已验收结论。\n\n## 状态、结论及证据\n已通过事实与工程范围的调查验收，详见验收评论与固定提交。科学识别、训练准入和贡献仍未通过。状态及过程记录仅在本issue维护；仓库保存证据和设计，不维护另一套活动任务表。\n"
+      }
+    },
+    {
+      "id": "m0-record-audit-completion-2026-09-28",
+      "issue": "M0",
+      "body": "已验收 {{issue:audit}}，复用了已有工程而没有重做管线；{{issue:stops}} 的机制调查继续。M0未通过阶段验收，milestone保持开放。原始数据、逐题真值、历史样例笔记和旧初稿未公开。当前研究路线与统计判断均不预设survival有效。",
+      "patch": {
+        "body": "<!-- research-tracker:M0 -->\n## 研究问题与重要性\n现有成果究竟支持哪些事实，哪些科学判断仍没有证据？ 本板块以证据资格为验收对象，不以文件数量或代码运行作为科学通过。\n\n## 现有证据与待验证假设\n- 已知：已有17归档、事实管线和72项历史工程测试；没有真实训练预测，贡献门槛未通过。\n- 待证：历史完成标记可能足以支持工程复用，但不代表可识别性、泛化或贡献成立。\n- 来源：本地历史贡献审查 `docs/research/CONTRIBUTION_GATE.md`、[项目诊断](https://github.com/shuo19mo/prediciton-token/blob/main/docs/research/PROJECT_DIAGNOSIS.md)。公开同步只含本轮新规划与聚合证据；历史资料保留本地。\n\n## 依赖与负责人\n进入条件：读取现有 R00–R07、原始来源清单、工程验收和历史研究材料。\nR映射：R00–R07 的历史验收复核。\n研究负责人：Codex（文献、数据、设计、独立评价）；师兄负责模型实现、训练、调参。GitHub账户为仓库管理者，不据此代替师兄确认。\n\n## 工作与交付\n证据分层诊断、可复算事实摘要、失败停止机制缺口、R 流程映射和阶段决策记录。\n当前子问题将以任务链接补入本issue。\n\n## 验收标准\n每项主要结论可追到版本与来源；工程、假设和真实效果不混淆；下一阶段有明确待证问题；未解决缺口有 issue 和责任。\n关闭阶段前必须在本issue记录：支持/不支持/不足以判断、证据版本、未解决项和推进/重构决定。子issue关闭不自动关闭milestone。\n\n## 推翻与重构条件\n事实/计量无法复算、标签目标混淆或关键输入含未来信息时，回到 R03–R05 修复，不能以工程完成进入训练。\n\n## 状态、结论与证据位置\n当前阶段，审计进行中。 没有真实模型效果结论。\n详细规格与产物：docs/research/；唯一动态状态：GitHub Issues/Milestones。仅HAL已有公开记录优先；无新轨迹、判分、训练、投稿、数据发布或对外联系。\n\n当前子issues：\n- [x] {{issue:audit}}\n- [ ] {{issue:stops}}\n- [ ] {{issue:gate}}\n"
+      }
+    },
+    {
+      "id": "training-dependency-label-2026-09-28",
+      "issue": "M4",
+      "body": "保持开放并标记needs-training：依赖M2/M3证据验收后，师兄提供绑定数据/规格版本的模型实现、训练/调参记录、全体测试ID预测、失败状态及计算成本；研究负责人独立验收，不能以等待为由代为训练或伪造预测。",
+      "patch": {
+        "labels": [
+          "experiment",
+          "blocked",
+          "needs-training"
+        ]
+      }
     }
   ]
 }

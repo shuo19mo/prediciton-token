@@ -1,0 +1,54 @@
+{
+  "as_of": "2026-09-29",
+  "status": "review_ready_candidate",
+  "training_approved": false,
+  "target": "actor_total_tokens_observed conditional on source-scored success and strict observed-input/complete-usage eligibility",
+  "benchmark": "scienceagentbench",
+  "source_history_commit": "058f351eb6ed4f5819aacba2ab8fbdc371a57a18",
+  "source_manifest_sha256": "d66db6fb76bfe5bb5e5e2aca1902944d6e1ce1b32b071d4e20b88db97d373842",
+  "frozen_derived_data_fingerprint": "ca3e0e65865b4b7cf8198bddfcf3078822c7e9a91f426827b36d88cd5876bf68",
+  "initial_inputs_sha256": "5efcbe3385119666dd3263e67205914c1967ee24163289d82a873b3118fcdf9b",
+  "source_archives_verified": 6,
+  "initial_call_provenance": {
+    "rows_checked": 612,
+    "exact_matches": 612,
+    "source_call_id_mismatch": 0,
+    "role_or_text_mismatch": 0,
+    "missing_primary_call": 0
+  },
+  "support": {
+    "recorded_runs": 612,
+    "source_scored_successes": 134,
+    "eligible_success_labels": 134,
+    "successful_task_groups": 56,
+    "configurations": 6
+  },
+  "fixed_split": {
+    "existing_split": "family",
+    "outer_fold": 0,
+    "train_eligible_success_runs": 102,
+    "train_eligible_task_groups": 43,
+    "train_eligible_family_groups": 19,
+    "test_feature_rows": 186,
+    "test_feature_task_groups": 31,
+    "test_feature_family_groups": 6,
+    "test_eligible_success_runs": 32,
+    "test_eligible_task_groups": 13,
+    "test_eligible_family_groups": 6,
+    "configurations_in_both_partitions": 6,
+    "cross_partition_task_or_family_overlap": 0,
+    "inner_family_splits": 3
+  },
+  "privacy": {
+    "raw_records_or_task_text_committed": false,
+    "test_targets_in_trainer_release": false,
+    "evaluator_package_is_separate_sibling": true,
+    "small_cell_cost_values_published": false
+  },
+  "limits": [
+    "Observed successful-run target only; no inference for failed-run potential costs.",
+    "Historical development exposure remains.",
+    "One fixed outer family fold and 13 eligible held-out task groups limit generalization and precision.",
+    "Source consistency is limited to calls visible in the archived logging stream."
+  ]
+}

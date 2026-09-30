@@ -69,11 +69,12 @@
 - 重构/放弃当前方案：关键主张缺证、最新工作消解贡献或内部审查不通过时，回到研究阶段；不得通过修辞掩盖问题。
 - 既有R接口：复用R00–R07证据；paper/仅历史资料直到满足进入条件。
 
-## M0 验收与 M1 导航
+## M0 验收与阶段索引
 
 1. **已验收：事实与证据资格复核**（[#8](https://github.com/shuo19mo/prediciton-token/issues/8)）：校验17归档及9份冻结派生文件；完成1197运行/312任务身份的事实复算。只通过工程与事实范围，不代表科学识别。
 2. **已验收：失败停止与删失依据核查**（[#9](https://github.com/shuo19mo/prediciton-token/issues/9)）：区分规则、逐次触发、评估诊断及是否能继续；四项删失判断仍为 unknown，训练准入为0。
 3. **M0交接与M1导航**：[#11](https://github.com/shuo19mo/prediciton-token/issues/11) 已通过可靠交接门槛，不代表目标可识别、方法有效或贡献成立；[#12](https://github.com/shuo19mo/prediciton-token/issues/12) 的最近工作比较已验收，否定宽泛的运行前任务级 token 预测空白。[#13](https://github.com/shuo19mo/prediciton-token/issues/13) 的目标候选报告见 [M1_SUCCESS_TARGET_CANDIDATES_2026-09.md](M1_SUCCESS_TARGET_CANDIDATES_2026-09.md)，当前结论为 `NO_SUPPORTED_CANDIDATE`；这不表示 M1 整体通过，M1 仍开放。研究目标仍为运行前预测成功完成所需 token；候选 estimand、贡献主张与后续方法由证据决定。
+4. **M2 数据准备设计记录**：[#14](https://github.com/shuo19mo/prediciton-token/issues/14) 的固定成功终点准备材料见 [SUCCESS_ENDPOINT_EXPERIMENT_V1.md](../handoff/SUCCESS_ENDPOINT_EXPERIMENT_V1.md) 和 [DATA_READINESS_2026-09.md](DATA_READINESS_2026-09.md)。`review_ready` 仅表示一个隔离数据包候选完成了准备检查；不等于训练授权、训练开始或 M2 验收通过。M1 的 `NO_SUPPORTED_CANDIDATE` 仍是历史结论，M1 是否完成继续由 GitHub milestone 决定。
 
 M0通过表示有可靠接手诊断与下一研究问题，不表示目标可识别、方法有效或贡献成立。调查可以得到否定结论而完成；支持不足的科学门槛不得因此标为通过。
 
@@ -97,4 +98,4 @@ M0通过表示有可靠接手诊断与下一研究问题，不表示目标可识
 - [M5 milestone](https://github.com/shuo19mo/prediciton-token/milestone/6)：完整证据与稳健性；进入时细化。
 - [M6 milestone](https://github.com/shuo19mo/prediciton-token/milestone/7)：证据成熟后的写作；进入时细化。
 
-M0/M1 issue 索引：[事实复核 #8](https://github.com/shuo19mo/prediciton-token/issues/8)、[停止证据 #9](https://github.com/shuo19mo/prediciton-token/issues/9)、[阶段决策与交接 #11](https://github.com/shuo19mo/prediciton-token/issues/11)、[最近工作对照 #12](https://github.com/shuo19mo/prediciton-token/issues/12)、[成功 token 目标候选 #13](https://github.com/shuo19mo/prediciton-token/issues/13)。#1 与 #10 是撤销的占位 issue，保留在历史中，不代表当前待办。实时状态只以 GitHub Issues 与 Milestones 为准。
+M0/M1/M2 issue 索引：[事实复核 #8](https://github.com/shuo19mo/prediciton-token/issues/8)、[停止证据 #9](https://github.com/shuo19mo/prediciton-token/issues/9)、[阶段决策与交接 #11](https://github.com/shuo19mo/prediciton-token/issues/11)、[最近工作对照 #12](https://github.com/shuo19mo/prediciton-token/issues/12)、[成功 token 目标候选 #13](https://github.com/shuo19mo/prediciton-token/issues/13)、[成功终点数据准备 #14](https://github.com/shuo19mo/prediciton-token/issues/14)。#1 与 #10 是撤销的占位 issue，保留在历史中，不代表当前待办。实时状态只以 GitHub Issues 与 Milestones 为准。

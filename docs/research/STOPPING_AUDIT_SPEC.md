@@ -2,6 +2,8 @@
 
 规格版本：2026-09-29-v1。对应 [Issue #9](https://github.com/shuo19mo/prediciton-token/issues/9) 和 [M0](https://github.com/shuo19mo/prediciton-token/milestone/1)。这是静态交接规格；执行状态、问题和验收只在 issue 记录。
 
+> 历史规格，#9 已执行并验收，不是当前实现或重新开工指令。文中的工作区、命令、输出和下一步仅适用于当时。现行路线见[滚动路线](ROLLING_ROADMAP.md)，当前协议见[#15](https://github.com/shuo19mo/prediciton-token/issues/15)。
+
 ## 1. 要解决的问题与分工
 
 现有解析器只从顶层输出字符串识别 `TIMEOUT` / `ERROR:`。它给出的 unknown 不能代表整个原始归档没有停止证据。本项要把现有记录中“配置了什么规则、实际发生了什么、最终如何判分、还缺什么”分别追到来源，再供研究负责人判断失败是否支持潜在成功成本下界。

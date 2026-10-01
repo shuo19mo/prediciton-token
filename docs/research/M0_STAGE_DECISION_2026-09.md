@@ -1,5 +1,7 @@
 # M0 阶段决策：通过交接门槛，先做最近工作反证
 
+> 历史阶段记录，日期：2026-09-28。文中阶段决定及下一步只指当时，不能作为活动指令。当前路线见[滚动路线](ROLLING_ROADMAP.md)，当前协议见[#15](https://github.com/shuo19mo/prediciton-token/issues/15)。旧代码材料对应本地历史路径 `docs/research/CONTRIBUTION_GATE.md`、`docs/research/LITERATURE_REVIEW.md`、`docs/research/LITERATURE_UPDATE_2026-09-28.md`；这些路径不表示文件存在于公开 `main`。
+
 日期：2026-09-28  
 阶段决定：**PASS（仅表示阶段交接可靠）**
 
@@ -13,8 +15,8 @@
 | 可观察成功终点支持 | #8：161 个合格成功终点来自 81 个任务身份 | 观察事实 | 可研究已观察成功终点的条件预测；不能外推失败总体或潜在成功成本 |
 | 停止机制与来源核验 | [#9 验收](https://github.com/shuo19mo/prediciton-token/issues/9#issuecomment-5882842818)：17 份归档、1,197 条运行、12 个 HAL 源码版本；索引、来源表和公开聚合可复查 | 调查交付通过 | 源码规则存在不等于运行实际触发；运行时依赖仍有缺口 |
 | 自然失败是否是成功成本右删失 | #9 四项判断 T>U、同一继续规则、完整前缀首次成功可见性、条件独立删失均为 unknown；训练获准行数为 0 | 不具备训练资格；unknown 不等于反证 | “最终可成功”不能补出任何识别条件 |
-| 方法和贡献 | [贡献门槛](https://github.com/shuo19mo/prediciton-token/blob/main/docs/research/CONTRIBUTION_GATE.md)未通过；没有真实预测效果 | 尚未建立 | 不把数据整理、首次应用或旧 pilot 当成贡献或效果 |
-| 最近工作 | [核心文献综述](https://github.com/shuo19mo/prediciton-token/blob/main/docs/research/LITERATURE_REVIEW.md)与[更新记录](https://github.com/shuo19mo/prediciton-token/blob/main/docs/research/LITERATURE_UPDATE_2026-09-28.md)：7 篇相关工作，D01 与 BAGEN 直接涉及成本预测 | 有近邻，实质差异尚未完成逐项核查 | 不等于全领域检索、重读全部原文或已证明新颖性 |
+| 方法和贡献 | 本地历史代码材料 `docs/research/CONTRIBUTION_GATE.md` 未通过；没有真实预测效果 | 尚未建立 | 不把数据整理、首次应用或旧 pilot 当成贡献或效果 |
+| 最近工作 | 本地历史材料 `docs/research/LITERATURE_REVIEW.md` 与 `docs/research/LITERATURE_UPDATE_2026-09-28.md`：7 篇相关工作，D01 与 BAGEN 直接涉及成本预测 | 有近邻，实质差异尚未完成逐项核查 | 不等于全领域检索、重读全部原文或已证明新颖性 |
 
 停止审计实现与聚合结果可在 [#9 代码差异](https://github.com/shuo19mo/prediciton-token/compare/main...codex/issue-9-stop-index)复查。逐运行索引和任务材料仍在受控本地位置，未发布。
 

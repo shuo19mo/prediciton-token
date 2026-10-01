@@ -1,6 +1,6 @@
 # HAL停止证据初核：解析未知不等于原日志无信息
 
-版本2026-09-28-r1；当前是机制调查的初步证据，尚未完成逐运行停止分支核对。研究状态以GitHub对应issue为准。
+> 历史初核报告，版本2026-09-28-r1。文中“当前”与继续调查步骤仅指当时状态，不是活动指令；#9 的调查已作为历史工作完成，不在本报告重开。现行路线见[滚动路线](ROLLING_ROADMAP.md)，当前协议见[#15](https://github.com/shuo19mo/prediciton-token/issues/15)。
 
 对现有17归档的派生事实复算，B的603个失败候选中，601条 `stop_reason=null`，2条 `explicit_timeout`；1,197条记录均没有整次token cap。分层为SAB 476未知/2超时、CORE 48未知、SWE 77未知。来源hash及分母见[聚合复算](../../reports/research_audit/current_evidence.json)。
 

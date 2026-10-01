@@ -1,6 +1,6 @@
 # 项目现状诊断：事实、假设与尚未形成的贡献
 
-审计日期：2026-09-28（America/Edmonton）；对应GitHub当前M0。本文是固定版本的研究证据，实时进度以[GitHub](https://github.com/shuo19mo/prediciton-token/issues)为准。
+> 历史报告，审计日期：2026-09-28（America/Edmonton）。文中“当前”与下一步仅指当日状态，不是活动指令。现行路线见[滚动路线](ROLLING_ROADMAP.md)，当前协议见[#15](https://github.com/shuo19mo/prediciton-token/issues/15)；#14 数据准入验收见[验收评论](https://github.com/shuo19mo/prediciton-token/issues/14#issuecomment-5901809512)。
 
 **结论：工程基础可复用，训练准入、自然失败的删失有效性和主会贡献均未建立。应先研究目标与证据资格，不继续扩写论文。**
 

@@ -1,6 +1,6 @@
 # Data readiness for success-endpoint experiment
 
-Date: 2026-09-29. This is a support and packaging report for issue #14, not a training result or a claim that the scientific question is settled.
+Date: 2026-09-29. This support and packaging report was accepted for issue #14 at [`480e548`](https://github.com/shuo19mo/prediciton-token/commit/480e548f340f12d854064bbf8208d90b008893ef); see [Astra's acceptance](https://github.com/shuo19mo/prediciton-token/issues/14#issuecomment-5901809512). It is a data-admission PASS only, not mentor confirmation, training authorization, a training result, or proof that the scientific question or contribution is settled. The current frozen experiment protocol is [issue #15](https://github.com/shuo19mo/prediciton-token/issues/15) and [SUCCESS_ENDPOINT_EXPERIMENT_V1.md](../handoff/SUCCESS_ENDPOINT_EXPERIMENT_V1.md).
 
 ## Frozen evidence and source check
 
@@ -12,7 +12,7 @@ For source-call provenance, the documented reader is `research_plan/src/haldata.
 
 ScienceAgentBench contributes 612 recorded runs, 134 source-scored successes, 56 successful task groups, and six configurations. Applying the issue's success-only criteria yields all 134 as eligible observed labels: 102 training labels (43 task groups; 19 family groups) and 32 held-out labels (13 task groups; six family groups). The fixed family fold 0 also carries 186 unlabeled/feature-only held-out rows across 31 task groups and six family groups. All six configurations are represented in both outer partitions. The task-only split was not selected because it has cross-partition family overlap; fold 0 of the pre-existing family split has no task or family overlap.
 
-The current package is a **review-ready candidate**, not permission to train. The trainer directory contains 102 training labels and 102 matching feature rows, 186 test-feature rows without target/outcome fields, and three filtered inner family splits. Its sibling evaluator directory holds the 186 held-out facts, with only the 32 eligible success labels populated; the other held-out targets are null. File hashes and separation are recorded in the private package manifest in the controlled output location.
+The package state is **review-ready / training_approved=false**, not permission to train. The trainer directory contains 102 training labels and 102 matching feature rows, 186 test-feature rows without target/outcome fields, and three filtered inner family splits. Its sibling evaluator directory holds the 186 held-out facts, with only the 32 eligible success labels populated; the other held-out targets are null. The three inner splits are retained as package contents but are not used in the #15 experiment; all 102 training rows fit preprocessing and the fixed models. File hashes and separation are recorded in the private package manifest in the controlled output location.
 
 ## Scope and limitations
 
